@@ -1,0 +1,81 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import type { Artwork } from "@/lib/art";
+
+type Props = {
+  artwork: Artwork | null;
+  onClose: () => void;
+};
+
+export function Lightbox({ artwork, onClose }: Props) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!artwork) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [artwork, onClose]);
+
+  return (
+    <AnimatePresence>
+      {artwork && (
+        <motion.div
+          key="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={artwork.title}
+          className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-10"
+          onClick={onClose}
+        >
+          <motion.div
+            className="absolute inset-0 bg-ink/85"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+          <motion.figure
+            layoutId={`art-${artwork.slug}`}
+            className="pinned relative cursor-zoom-out"
+            style={{ rotate: 0, width: `min(92vw, calc(78vh * ${artwork.width / artwork.height}))` }}
+            transition={{ type: "spring", stiffness: 220, damping: 26 }}
+          >
+            <span className="relative block" style={{ aspectRatio: `${artwork.width} / ${artwork.height}` }}>
+              <Image src={artwork.src} alt={artwork.title} fill sizes="92vw" className="object-contain" />
+            </span>
+            <figcaption className="mt-2 flex items-baseline justify-between gap-4">
+              <span className="font-hand text-3xl leading-none">{artwork.title}</span>
+              {artwork.year && <span className="text-sm opacity-70">{artwork.year}</span>}
+            </figcaption>
+          </motion.figure>
+          <motion.button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            className="sticker absolute right-4 top-4 z-10 rotate-6 px-3 py-1 font-hand text-2xl sm:right-8 sm:top-8"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            aria-label="Close"
+          >
+            close ✕
+          </motion.button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
