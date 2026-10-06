@@ -9,7 +9,7 @@ export default function Home() {
         <SiteNav />
       </header>
       <div className="grid flex-1 grid-cols-1 md:grid-cols-[5fr_7fr]">
-        <div className="flex items-center px-8 py-16 md:-mt-[10vh] md:pl-[108px]">
+        <div className="flex items-center px-8 py-16 md:pb-[20vh] md:pl-[108px]">
           <h1 className="text-[clamp(56px,6.7vw,96px)] leading-none tracking-[0.02em]">
             <Link href="/">Jagua jpg</Link>
           </h1>
