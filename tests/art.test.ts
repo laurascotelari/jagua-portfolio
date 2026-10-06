@@ -29,6 +29,7 @@ describe("loadArtworks", () => {
       title: "The Tall One",
       year: 2026,
       description: "A fixture.",
+      meaning: "A fixture day.",
       date: "2026-03-01",
       width: 10,
       height: 30,

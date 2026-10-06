@@ -40,33 +40,22 @@ function shuffled(count: number, seed: number): number[] {
 }
 
 /**
- * Picks the artwork index for a given day.
- *
- * Days are grouped into cycles of `count` days; each cycle is a seeded shuffle,
- * so every artwork appears once per cycle and the same date always gives the
- * same pick. Consecutive days never repeat (when there are 2+ artworks).
- * Note: adding or removing artworks reshuffles future (and current) picks.
+ * Picks the artworks dealt as cards on a given day: up to `n` distinct indices,
+ * in card order. Each day is its own seeded shuffle, so the same date always
+ * deals the same cards (for every visitor) and the set changes day to day.
+ * Note: adding or removing artworks reshuffles the current (and future) deals.
  */
-export function pickForDate(dateKey: string, count: number): number {
-  if (!Number.isInteger(count) || count < 1) {
-    throw new RangeError(`count must be a positive integer, got ${count}`);
+export function pickCardsForDate(dateKey: string, count: number, n = 5): number[] {
+  if (!Number.isInteger(count) || count < 0) {
+    throw new RangeError(`count must be a non-negative integer, got ${count}`);
+  }
+  if (!Number.isInteger(n) || n < 1) {
+    throw new RangeError(`n must be a positive integer, got ${n}`);
   }
   if (!isDateKey(dateKey)) {
     throw new RangeError(`invalid date key: ${dateKey}`);
   }
   const [y, m, d] = dateKey.split("-").map(Number);
   const day = Math.floor(Date.UTC(y, m - 1, d) / MS_PER_DAY);
-  // With two pieces, strict alternation is the only order that never repeats.
-  if (count <= 2) return day % count;
-
-  const cycle = Math.floor(day / count);
-  const position = day - cycle * count;
-
-  const order = shuffled(count, cycle);
-  // Avoid showing the same piece on the last day of one cycle and the first of the next.
-  // (The swap only touches positions 0 and 1, so the previous cycle's last item is stable.)
-  if (order[0] === shuffled(count, cycle - 1)[count - 1]) {
-    [order[0], order[1]] = [order[1], order[0]];
-  }
-  return order[position];
+  return shuffled(count, day).slice(0, n);
 }
