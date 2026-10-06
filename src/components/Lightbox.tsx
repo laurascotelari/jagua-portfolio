@@ -43,30 +43,30 @@ export function Lightbox({ artwork, onClose }: Props) {
           onClick={onClose}
         >
           <motion.div
-            className="absolute inset-0 bg-ink/85"
+            className="absolute inset-0 bg-cream/90"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
           <motion.figure
             layoutId={`art-${artwork.slug}`}
-            className="pinned relative cursor-zoom-out"
-            style={{ rotate: 0, width: `min(92vw, calc(78vh * ${artwork.width / artwork.height}))` }}
+            className="relative cursor-zoom-out rounded-[16px] bg-pink px-[22px] pb-6 pt-[22px] shadow-card"
+            style={{ width: `min(92vw, calc(78vh * ${artwork.width / artwork.height}))` }}
             transition={{ type: "spring", stiffness: 220, damping: 26 }}
           >
             <span className="relative block" style={{ aspectRatio: `${artwork.width} / ${artwork.height}` }}>
               <Image src={artwork.src} alt={artwork.title} fill sizes="92vw" className="object-contain" />
             </span>
-            <figcaption className="mt-2 flex items-baseline justify-between gap-4">
-              <span className="font-hand text-3xl leading-none">{artwork.title}</span>
-              {artwork.year && <span className="text-sm opacity-70">{artwork.year}</span>}
+            <figcaption className="mt-4 flex items-baseline justify-between gap-4">
+              <span className="text-[24px] leading-[1.2] tracking-[0.04em]">{artwork.title}</span>
+              {artwork.year && <span className="font-script text-[20px]">{artwork.year}</span>}
             </figcaption>
           </motion.figure>
           <motion.button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="sticker absolute right-4 top-4 z-10 rotate-6 px-3 py-1 font-hand text-2xl sm:right-8 sm:top-8"
+            className="nav-link absolute right-4 top-4 z-10 cursor-pointer text-[22px] sm:right-8 sm:top-8"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}

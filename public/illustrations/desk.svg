@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 1000" fill="none" stroke="#160066" stroke-width="3" stroke-linejoin="round">
+  <!-- Placeholder: replace with the real desk illustration. -->
+  <rect x="60" y="20" width="90" height="80"/><rect x="170" y="10" width="80" height="60"/>
+  <rect x="290" y="0" width="80" height="90"/><rect x="400" y="30" width="60" height="50"/>
+  <rect x="560" y="40" width="70" height="80"/><rect x="40" y="160" width="130" height="70"/>
+  <rect x="190" y="150" width="70" height="60"/><rect x="290" y="130" width="90" height="70"/>
+  <rect x="410" y="110" width="50" height="70"/><rect x="490" y="120" width="60" height="70"/>
+  <rect x="280" y="230" width="100" height="160" fill="#160066" fill-opacity="0.15"/>
+  <rect x="400" y="200" width="100" height="150"/><rect x="520" y="230" width="70" height="80"/>
+  <rect x="60" y="270" width="70" height="80"/><rect x="160" y="250" width="80" height="80"/>
+  <rect x="270" y="420" width="140" height="130"/>
+  <path d="M60 360 L120 700 M140 360 L230 700 M75 560 H200" stroke-width="10"/>
+  <path d="M480 530 q40 -80 90 -30 l-20 30 z" fill="#160066"/><path d="M520 540 v80 h-30"/>
+  <rect x="460" y="560" width="70" height="20" rx="10"/>
+  <path d="M0 600 H670 V650 H10 Z"/><path d="M30 650 V1000 M640 650 V1000"/>
+  <rect x="400" y="660" width="210" height="140"/><path d="M460 720 h80 M460 770 h80"/>
+  <rect x="140" y="640" width="200" height="260" rx="14"/><path d="M150 900 V1000 M330 900 V1000"/>
+</svg>

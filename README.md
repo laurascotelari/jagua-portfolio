@@ -6,7 +6,7 @@ Art portfolio for an illustrator. Should allow the user to easily add new images
 ## How to add art
 
 1. Put the image in `public/art/` (`.jpg`, `.png`, `.webp`, `.avif` or `.gif`).
-2. Commit and push. The site rebuilds and the image appears in the gallery and in the Art of the Day rotation.
+2. Commit and push. The site rebuilds and the image appears in the gallery and can be dealt as one of the day's 5 cards on **Check the Cards**.
 
 **Naming**
 - The title comes from the filename: `sleepy-fox.jpg` → "Sleepy fox".
@@ -15,12 +15,17 @@ Art portfolio for an illustrator. Should allow the user to easily add new images
 **Optional details:** add a JSON file with the same name next to the image, for example `sleepy-fox.json`:
 
 ```json
-{ "title": "The Sleepy Fox", "year": 2026, "description": "Gouache on paper." }
+{
+  "title": "The Sleepy Fox",
+  "year": 2026,
+  "description": "Gouache on paper.\n\nA blank line starts a new paragraph.",
+  "meaning": "Shown under \"What does it mean for your day?\" when the card is turned over."
+}
 ```
 
-Delete the `placeholder-*.jpg` files once real art is in.
+Delete the `placeholder-*.jpg` files once real art is in. Also swap the placeholder drawings in `public/illustrations/` (`desk.svg` for the landing page, `card-back.svg` for the cards). Keep the same names, or update the paths in `src/app/page.tsx` and `src/components/TarotCards.tsx`.
 
-**Preview another day's Art of the Day:** open `/?date=2026-12-25`.
+**Preview another day's cards:** open `/cards?date=2026-12-25`.
 
 ## Development
 
@@ -35,6 +40,6 @@ Requires Node 20.9 or newer.
 
 Code map:
 - `src/lib/art.ts`: reads `public/art/`
-- `src/lib/daily.ts`: picks the daily image
+- `src/lib/daily.ts`: picks the day's 5 cards
 - `src/components/`: UI and animations (Motion)
-- `src/app/globals.css`: design tokens (colours, fonts)
+- `src/app/globals.css`: design tokens (colours, fonts); full specs in `docs/DESIGN.md`

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Gallery } from "@/components/Gallery";
+import { SiteNav } from "@/components/SiteNav";
 import { loadArtworks } from "@/lib/art";
 
 export const metadata: Metadata = { title: "Gallery" };
@@ -8,13 +9,13 @@ export default function GalleryPage() {
   const artworks = loadArtworks();
 
   return (
-    <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-20 pt-28 sm:px-8">
-      <h1 className="mb-12 text-center font-display text-5xl text-tomato sm:text-6xl">
-        <span className="inline-block -rotate-2">The</span>{" "}
-        <span className="inline-block rotate-1 text-grape">Wall</span>
-      </h1>
+    <main className="flex-1 bg-cream">
+      <header className="sticky top-0 z-10 flex min-h-[130px] flex-wrap items-center justify-between gap-x-12 gap-y-3 bg-pink px-8 py-6 md:px-[66px]">
+        <h1 className="text-[40px] leading-[1.2] tracking-[0.06em]">All Art</h1>
+        <SiteNav />
+      </header>
       {artworks.length === 0 ? (
-        <p className="text-center font-hand text-3xl">Nothing pinned yet.</p>
+        <p className="px-8 py-16 text-[22px] md:px-[66px]">Nothing on the wall yet.</p>
       ) : (
         <Gallery artworks={artworks} />
       )}

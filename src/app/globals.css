@@ -1,68 +1,90 @@
 @import "tailwindcss";
 
-/* Design tokens: change these to restyle the whole site. */
-:root {
-  --paper: #fbf5e9;
-  --ink: #1d1a2f;
-  --tomato: #ff5a36;
-  --sun: #ffc93c;
-  --mint: #3ddc97;
-  --grape: #7b5cff;
-  --tape: rgb(255 201 60 / 0.75);
+/* Design tokens (docs/DESIGN.md): the whole UI uses only these three colors. */
+@theme static {
+  --color-pink: #fecbcc;
+  --color-cream: #fbf3dd;
+  --color-navy: #160066;
+  --color-navy-shadow: rgb(22 0 102 / 0.2);
+
+  --shadow-card: 0 4px 3px var(--color-navy-shadow);
+  --shadow-card-hover: 0 10px 12px var(--color-navy-shadow);
+  --ease-flip: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* next/font sets --font-dotgothic / --font-nothing-you-could-do on <html>. */
 @theme inline {
-  --color-paper: var(--paper);
-  --color-ink: var(--ink);
-  --color-tomato: var(--tomato);
-  --color-sun: var(--sun);
-  --color-mint: var(--mint);
-  --color-grape: var(--grape);
-  --font-display: var(--font-shrikhand);
-  --font-hand: var(--font-caveat);
-  --font-sans: var(--font-bricolage);
+  --font-pixel: var(--font-dotgothic), "VT323", "Courier New", monospace;
+  --font-script: var(--font-nothing-you-could-do), "Homemade Apple", "Caveat", cursive;
 }
 
 body {
-  background-color: var(--paper);
-  /* Faint dotted "sketchbook" texture. */
-  background-image: radial-gradient(rgb(29 26 47 / 0.08) 1px, transparent 1px);
-  background-size: 18px 18px;
-  color: var(--ink);
+  background-color: var(--color-cream);
+  color: var(--color-navy);
+  font-family: var(--font-pixel);
 }
 
 :focus-visible {
-  outline: 3px dashed var(--grape);
+  outline: 2px solid var(--color-navy);
   outline-offset: 4px;
 }
 
-/* Chunky offset-shadow sticker used for labels and buttons. */
-.sticker {
-  background: var(--paper);
-  border: 3px solid var(--ink);
-  border-radius: 14px 18px 12px 20px;
-  box-shadow: 5px 5px 0 var(--ink);
-}
+/* Unlayered CSS would beat Tailwind utilities, so shared classes live in a layer. */
+@layer components {
+  .nav-link {
+    text-decoration: none;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
 
-/* Taped-to-the-wall card frame. */
-.pinned {
-  position: relative;
-  background: white;
-  padding: 10px 10px 14px;
-  border: 3px solid var(--ink);
-  box-shadow: 6px 6px 0 var(--ink);
-}
+  .nav-link:hover,
+  .nav-link[aria-current="page"] {
+    text-decoration-line: underline;
+  }
 
-.pinned::before {
-  content: "";
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  width: 84px;
-  height: 26px;
-  transform: translateX(-50%) rotate(-4deg);
-  background: var(--tape);
-  border-left: 2px dashed rgb(29 26 47 / 0.25);
-  border-right: 2px dashed rgb(29 26 47 / 0.25);
-  z-index: 1;
+  /* Gallery masonry: 7 → 2 columns. */
+  .gallery-grid {
+    columns: 2;
+    column-gap: 14px;
+    padding: 0 14px 14px;
+  }
+
+  @media (min-width: 560px) { .gallery-grid { columns: 3; } }
+  @media (min-width: 768px) { .gallery-grid { columns: 4; } }
+  @media (min-width: 1000px) { .gallery-grid { columns: 5; } }
+  @media (min-width: 1200px) { .gallery-grid { columns: 6; } }
+  @media (min-width: 1440px) { .gallery-grid { columns: 7; } }
+
+  .gallery-grid > li {
+    break-inside: avoid;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-pink);
+  }
+
+  /* Tarot card flip. */
+  .card-3d {
+    perspective: 1200px;
+  }
+
+  .card-flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    background: var(--color-pink);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-face-front {
+    transform: rotateY(180deg);
+  }
 }

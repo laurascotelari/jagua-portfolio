@@ -13,9 +13,11 @@ export type Artwork = {
   date?: string;
   year?: number;
   description?: string;
+  /** "What does it mean for your day?" text shown when the card is revealed. */
+  meaning?: string;
 };
 
-type Sidecar = Partial<Pick<Artwork, "title" | "year" | "description">>;
+type Sidecar = Partial<Pick<Artwork, "title" | "year" | "description" | "meaning">>;
 
 const IMAGE_EXT = /\.(jpe?g|png|webp|avif|gif)$/i;
 const DATE_PREFIX = /^(\d{4}-\d{2}-\d{2})[-_ ]+/;
@@ -58,6 +60,7 @@ export function loadArtworks(dir = DEFAULT_DIR, urlBase = "/art"): Artwork[] {
         date: DATE_PREFIX.exec(slug)?.[1],
         year: sidecar.year,
         description: sidecar.description,
+        meaning: sidecar.meaning,
       };
     });
 
