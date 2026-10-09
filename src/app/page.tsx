@@ -1,31 +1,24 @@
-import Image from "next/image";
-import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
+import { AboutSection } from "@/components/sections/AboutSection";
+import { CardsSection } from "@/components/sections/CardsSection";
+import { GallerySection } from "@/components/sections/GallerySection";
+import { Hero } from "@/components/sections/Hero";
+import { loadArtworks } from "@/lib/art";
 
 export default function Home() {
+  const artworks = loadArtworks();
+
   return (
-    <main className="relative flex min-h-screen flex-1 flex-col overflow-hidden bg-pink">
-      <header className="px-8 pt-6">
+    <>
+      <header className="sticky top-0 z-30 flex h-(--header-h) items-center bg-pink px-8">
         <SiteNav />
       </header>
-      <div className="grid flex-1 grid-cols-1 md:grid-cols-[5fr_7fr]">
-        <div className="flex items-center px-8 py-16 md:pb-[20vh] md:pl-[108px]">
-          <h1 className="text-[clamp(56px,6.7vw,96px)] leading-none tracking-[0.02em]">
-            <Link href="/">Jagua jpg</Link>
-          </h1>
-        </div>
-        <div className="relative flex items-end justify-center md:justify-end md:pr-[clamp(32px,11vw,160px)]">
-          {/* Swap for the real desk drawing (navy ink, transparent background). */}
-          <Image
-            src="/illustrations/desk.svg"
-            alt="Line drawing of an artist's desk under a wall covered in framed pictures"
-            width={680}
-            height={1000}
-            priority
-            className="h-auto w-full max-w-[680px] translate-y-[8%]"
-          />
-        </div>
-      </div>
-    </main>
+      <main className="flex flex-1 flex-col">
+        <Hero />
+        <CardsSection artworks={artworks} />
+        <GallerySection artworks={artworks} />
+        <AboutSection />
+      </main>
+    </>
   );
 }
