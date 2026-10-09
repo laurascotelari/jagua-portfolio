@@ -3,6 +3,8 @@
 Design details for every page of the portfolio. Each page has its own section with the same structure.
 Values marked `~` are estimates taken from the reference mockup (1440 × 1024).
 
+**Site structure:** the site is one long scrolling page at `/`, with sections in this order: Home (hero, `#home`), Check the Cards (`#cards`), Gallery (`#gallery`), About me (`#about`). A single sticky pink header holds the nav; its links smooth-scroll to each section and underline the one in view. `/gallery`, `/cards` and `/about` permanently redirect to their sections. The "pages" below describe each section.
+
 ## Pages
 
 - [Global palette](#global-palette)

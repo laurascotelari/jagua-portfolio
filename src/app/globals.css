@@ -18,6 +18,27 @@
   --font-script: var(--font-nothing-you-could-do), "Homemade Apple", "Caveat", cursive;
 }
 
+/* Reserve the scrollbar's space so the Lightbox scroll lock doesn't widen the
+   page — otherwise every layoutId card in the gallery animates to its new size. */
+html {
+  scrollbar-gutter: stable;
+  /* Sticky header height: the nav wraps to two lines on small screens. */
+  --header-h: 104px;
+}
+
+@media (min-width: 768px) {
+  html { --header-h: 82px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Anchor jumps land below the sticky header instead of under it. */
+[id] {
+  scroll-margin-top: var(--header-h);
+}
+
 body {
   background-color: var(--color-cream);
   color: var(--color-navy);
@@ -38,7 +59,7 @@ body {
   }
 
   .nav-link:hover,
-  .nav-link[aria-current="page"] {
+  .nav-link[aria-current] {
     text-decoration-line: underline;
   }
 
@@ -46,7 +67,7 @@ body {
   .gallery-grid {
     columns: 2;
     column-gap: 14px;
-    padding: 0 14px 14px;
+    padding: 48px 14px 14px;
   }
 
   @media (min-width: 560px) { .gallery-grid { columns: 3; } }
@@ -55,7 +76,12 @@ body {
   @media (min-width: 1200px) { .gallery-grid { columns: 6; } }
   @media (min-width: 1440px) { .gallery-grid { columns: 7; } }
 
+  /* inline-block makes each tile unbreakable, so the column balancing stays put
+     while the hover filter animates. break-inside alone lets Chrome rebalance. */
   .gallery-grid > li {
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
     break-inside: avoid;
     margin-bottom: 14px;
     border-radius: 12px;
