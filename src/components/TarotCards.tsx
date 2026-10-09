@@ -111,7 +111,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
             </motion.div>
 
             <motion.div
-              className="max-w-[710px] md:pt-3"
+              className="max-w-[710px] mt-60 md:pt-3"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, transition: FADE }}
