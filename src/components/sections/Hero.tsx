@@ -1,6 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// Clickable spots on the desk drawing, as percentages of the image box so they scale with it.
+const hotspots = [
+  { href: "/#gallery", label: "Click to see the gallery", box: { left: 19, top: 3, width: 62, height: 34 }, centered: true },
+  { href: "/#about", label: "Click to read about me", box: { left: 62, top: 37.5, width: 14, height: 15 } },
+  { href: "/#cards", label: "Click to check today's card", box: { left: 62.5, top: 54.5, width: 11.5, height: 7.5 } },
+];
+
 export function Hero() {
   return (
     // Fills the first screen below the sticky header; the desk drawing spills down into the cards section.
@@ -17,17 +24,36 @@ export function Hero() {
       </div>
       {/* Desktop: drawing bleeds off the right edge, up over the sticky header, and 18vw into the cards section, which stays
           just above the card row. Width is capped so its height (aspect 2692/2500) fits from the top of the viewport to that
-          bleed line. z-40 puts it over the header (z-30); pointer-events-none keeps it from blocking clicks underneath. */}
+          bleed line. z-40 puts it over the header (z-30); pointer-events-none keeps it from blocking clicks underneath,
+          except on the hotspots. */}
       <div className="relative flex flex-1 items-end justify-center md:pointer-events-none md:absolute md:-bottom-[18vw] md:left-[40vw] md:z-40 md:w-[min(70vw,calc((100svh+18vw)*2500/2692))]">
-        <Image
-          src="/illustrations/desk2.png"
-          alt="Line drawing of an artist's desk under a wall covered in framed pictures"
-          width={2500}
-          height={2692}
-          priority
-          sizes="(min-width: 768px) 70vw, 100vw"
-          className="h-auto w-full max-w-[680px] mix-blend-darken md:max-w-none"
-        />
+        <div className="relative w-full max-w-[680px] md:max-w-none">
+          <Image
+            src="/illustrations/desk2.png"
+            alt="Line drawing of an artist's desk under a wall covered in framed pictures"
+            width={2500}
+            height={2692}
+            priority
+            sizes="(min-width: 768px) 70vw, 100vw"
+            className="h-auto w-full mix-blend-darken"
+          />
+          {hotspots.map(({ href, label, box, centered }) => (
+            <Link
+              key={href}
+              href={href}
+              aria-label={label}
+              className="group pointer-events-auto absolute rounded-lg"
+              style={{ left: `${box.left}%`, top: `${box.top}%`, width: `${box.width}%`, height: `${box.height}%` }}
+            >
+              <span
+                aria-hidden
+                className={`pointer-events-none absolute left-1/2 -translate-x-1/2 translate-y-1 ${centered ? "top-1/2 -mt-4" : "bottom-full mb-2"} rounded-md bg-cream px-3 py-1.5 text-sm whitespace-nowrap opacity-0 shadow-card transition duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100`}
+              >
+                {label}
+              </span>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
