@@ -161,7 +161,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                 What does the cards say about your day?
               </h1>
               <p className="font-script mt-2 -ml-1.5 text-[clamp(22px,2vw,28px)] leading-[1.2]">
-                pick you and find out!
+                pick one and find out!
               </p>
             </motion.div>
 
