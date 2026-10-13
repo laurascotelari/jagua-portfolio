@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useDictionary } from "@/i18n/LocaleProvider";
 import type { Artwork } from "@/lib/art";
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export function Lightbox({ artwork, onClose }: Props) {
+  const dictionary = useDictionary();
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -70,9 +72,9 @@ export function Lightbox({ artwork, onClose }: Props) {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            aria-label="Close"
+            aria-label={dictionary.lightbox.closeLabel}
           >
-            close ✕
+            {dictionary.lightbox.close}
           </motion.button>
         </motion.div>
       )}
