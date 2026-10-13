@@ -18,7 +18,7 @@ export type Artwork = {
   isCard: boolean;
 };
 
-export type LocalizedString = string | Partial<Record<Locale, string>>;
+type LocalizedString = string | Partial<Record<Locale, string>>;
 
 type CatalogEntry = {
   file: string;
@@ -33,7 +33,7 @@ const IMAGE_EXT = /\.(jpe?g|png|webp|avif|gif)$/i;
 const DATE_PREFIX = /^(\d{4}-\d{2}-\d{2})[-_ ]+/;
 const PLACEHOLDER_TEXT = new Set(["example 1", "descrição", "descricao"]);
 
-export type LoadArtworksOptions = {
+type LoadArtworksOptions = {
   catalogPath?: string;
   artDir?: string;
   urlBase?: string;

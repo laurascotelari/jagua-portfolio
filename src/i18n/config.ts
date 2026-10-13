@@ -6,7 +6,7 @@ export const localeCookie = "jagua-locale";
 
 /** Nav / hash section ids in display order. */
 export const navSections = ["home", "cards", "gallery", "about"] as const;
-export type NavSection = (typeof navSections)[number];
+type NavSection = (typeof navSections)[number];
 
 /** Section hash routes (excludes `home`). Shared by redirects and legacy URL handling. */
 export const sectionRoutes = navSections.filter(
