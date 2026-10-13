@@ -1,10 +1,10 @@
 [
   {
     "file": "2026-03-01-tall_thing.png",
-    "title": "The Tall One",
+    "title": { "pt": "A Alta", "en": "The Tall One" },
     "year": "2026",
-    "description": "A fixture.",
-    "meaning": "A fixture day.",
+    "description": { "pt": "Uma fixture.", "en": "A fixture." },
+    "meaning": { "pt": "Um dia de fixture.", "en": "A fixture day." },
     "isCard": true
   },
   {

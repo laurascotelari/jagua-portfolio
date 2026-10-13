@@ -14,10 +14,16 @@ Art portfolio for an illustrator. Should allow the user to easily add new images
 ```json
 {
   "file": "sleepy-fox.jpg",
-  "title": "The Sleepy Fox",
+  "title": { "pt": "A Raposa Sonolenta", "en": "The Sleepy Fox" },
   "year": 2026,
-  "description": "Gouache on paper.\n\nA blank line starts a new paragraph.",
-  "meaning": "Shown under \"What does it mean for your day?\" when the card is turned over.",
+  "description": {
+    "pt": "Guache sobre papel.\n\nUma linha em branco começa um novo parágrafo.",
+    "en": "Gouache on paper.\n\nA blank line starts a new paragraph."
+  },
+  "meaning": {
+    "pt": "Mostrado sob \"O que isso significa para o seu dia?\" quando a carta é virada.",
+    "en": "Shown under \"What does it mean for your day?\" when the card is turned over."
+  },
   "isCard": true
 }
 ```
@@ -25,11 +31,13 @@ Art portfolio for an illustrator. Should allow the user to easily add new images
 | Field | Required | Notes |
 |---|---|---|
 | `file` | yes | Filename inside `public/art/` |
-| `title` | no | Defaults from the filename (`sleepy-fox.jpg` → "Sleepy fox") |
+| `title` | no | `{ pt, en }` (or a plain string for both). Defaults from the filename (`sleepy-fox.jpg` → "Sleepy fox") |
 | `year` | no | Number or numeric string |
-| `description` | no | Artist story; shown when a card is revealed |
-| `meaning` | no | Daily reading; shown under "What does it mean for your day?" |
+| `description` | no | Artist story; `{ pt, en }` or plain string; shown when a card is revealed |
+| `meaning` | no | Daily reading; `{ pt, en }` or plain string |
 | `isCard` | no | `true` to include in the daily deal; default `false` |
+
+The site is served under `/pt` and `/en`. The first visit picks a locale from `Accept-Language` (Portuguese regions → `pt`, otherwise `en`); the header language control overrides that and stores a cookie. Missing locale copy falls back to the other language.
 
 Stub copy such as `"Example 1"` or `"Descrição"` is ignored (treated as empty). Prefer real text, or omit the field.
 
@@ -37,7 +45,7 @@ Stub copy such as `"Example 1"` or `"Descrição"` is ignored (treated as empty)
 
 Delete the `placeholder-*.jpg` files once real art is in. Also swap the placeholder drawings in `public/illustrations/` (`desk.svg` for the landing page, `card-back.svg` for the cards). Keep the same names, or update the paths in `src/app/page.tsx` and `src/components/TarotCards.tsx`.
 
-**Preview another day's cards:** open `/cards?date=2026-12-25`.
+**Preview another day's cards:** open `/en?date=2026-12-25#cards` (or `/pt/...`).
 
 ## Development
 

@@ -2,21 +2,27 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { localePath } from "@/i18n/locale-path";
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
 
-const links = [
-  { id: "home", label: "Home" },
-  { id: "cards", label: "Check the Cards" },
-  { id: "gallery", label: "Gallery" },
-  { id: "about", label: "About me" },
-];
+const sectionIds = ["home", "cards", "gallery", "about"] as const;
 
 export function SiteNav({ className = "" }: { className?: string }) {
+  const locale = useLocale();
+  const dictionary = useDictionary();
   const [active, setActive] = useState<string | null>(null);
+
+  const links = [
+    { id: "home", label: dictionary.nav.home },
+    { id: "cards", label: dictionary.nav.cards },
+    { id: "gallery", label: dictionary.nav.gallery },
+    { id: "about", label: dictionary.nav.about },
+  ] as const;
 
   // Highlight whichever section crosses the middle of the viewport.
   useEffect(() => {
-    const sections = links
-      .map((link) => document.getElementById(link.id))
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
     // Don't touch the URL until the page has scrolled, so a deep link like /#gallery isn't wiped before it's applied.
     let scrolled = false;
@@ -50,11 +56,11 @@ export function SiteNav({ className = "" }: { className?: string }) {
   }, []);
 
   return (
-    <nav aria-label="Main" className={`flex flex-wrap gap-x-[clamp(24px,5vw,75px)] gap-y-2 ${className}`}>
+    <nav aria-label={dictionary.nav.ariaLabel} className={`flex flex-wrap gap-x-[clamp(24px,5vw,75px)] gap-y-2 ${className}`}>
       {links.map((link) => (
         <Link
           key={link.id}
-          href={`/#${link.id}`}
+          href={localePath(locale, link.id)}
           aria-current={active === link.id ? "location" : undefined}
           className="nav-link text-[clamp(20px,2vw,28px)] leading-[1.2] tracking-[0.02em]"
         >

@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
+import { formatMessage } from "@/i18n/dictionaries";
+import { useDictionary } from "@/i18n/LocaleProvider";
 import type { Artwork } from "@/lib/art";
 
 type Props = {
@@ -10,6 +12,8 @@ type Props = {
 };
 
 export function MasonryGrid({ artworks, onSelect }: Props) {
+  const dictionary = useDictionary();
+
   return (
     <ul className="gallery-grid">
       {artworks.map((art) => (
@@ -25,7 +29,7 @@ export function MasonryGrid({ artworks, onSelect }: Props) {
             layoutId={`art-${art.slug}`}
             onClick={() => onSelect(art)}
             className="block w-full cursor-zoom-in overflow-hidden rounded-[12px] transition-[filter] duration-200 hover:brightness-[0.92]"
-            aria-label={`Open ${art.title}`}
+            aria-label={formatMessage(dictionary.gallery.openArtwork, { title: art.title })}
           >
             <span className="relative block" style={{ aspectRatio: `${art.width} / ${art.height}` }}>
               <Image

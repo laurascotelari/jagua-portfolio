@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { formatMessage } from "@/i18n/dictionaries";
+import { useDictionary } from "@/i18n/LocaleProvider";
 import type { Artwork } from "@/lib/art";
 import { isDateKey, pickCardsForDate, toDateKey } from "@/lib/daily";
 
@@ -49,6 +51,7 @@ function CardFront({ art }: { art: Artwork }) {
 }
 
 export function TarotCards({ artworks }: { artworks: Artwork[] }) {
+  const dictionary = useDictionary();
   // null on the server and during hydration; the real date is only known in the browser.
   const dateKey = useSyncExternalStore(subscribe, getDateKey, () => null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -79,8 +82,8 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
   if (artworks.length === 0) {
     return (
       <section className="px-8 py-28 md:pl-[104px]">
-        <h1 className="text-[40px] leading-[1.2] tracking-[0.02em]">The cards are still being painted.</h1>
-        <p className="font-script mt-2 text-[28px] leading-[1.2]">come back soon!</p>
+        <h1 className="text-[40px] leading-[1.2] tracking-[0.02em]">{dictionary.cards.emptyTitle}</h1>
+        <p className="font-script mt-2 text-[28px] leading-[1.2]">{dictionary.cards.emptySubtitle}</p>
       </section>
     );
   }
@@ -129,7 +132,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
               {art.meaning && (
                 <>
                   <h2 className="mt-20 text-[30px] leading-[1.3] tracking-[0.02em]">
-                    What does it mean for your day?
+                    {dictionary.cards.meaningHeading}
                   </h2>
                   <div className="mt-5 space-y-[35px] text-[clamp(18px,1.6vw,22px)] leading-[1.6] tracking-[0.01em]">
                     {paragraphs(art.meaning).map((p, i) => (
@@ -144,12 +147,12 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                 onClick={close}
                 className="nav-link mt-16 cursor-pointer text-[22px]"
               >
-                ← back to the cards
+                {dictionary.cards.back}
               </button>
             </motion.div>
           </motion.section>
         ) : (
-          <motion.section key="pick" aria-label="Pick a card" className="pb-20">
+          <motion.section key="pick" aria-label={dictionary.cards.pickAria} className="pb-20">
             <motion.div
               className="px-6 pt-[clamp(48px,7vw,112px)] md:pl-[104px]"
               initial={{ opacity: 0 }}
@@ -158,10 +161,10 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
               transition={FADE}
             >
               <h1 className="text-[clamp(28px,2.8vw,40px)] leading-[1.2] tracking-[0.02em]">
-                What does the cards say about your day?
+                {dictionary.cards.pickTitle}
               </h1>
               <p className="font-script mt-2 -ml-1.5 text-[clamp(22px,2vw,28px)] leading-[1.2]">
-                pick one and find out!
+                {dictionary.cards.pickSubtitle}
               </p>
             </motion.div>
 
@@ -182,7 +185,10 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                         transition={FLIP}
                         onClick={() => setSelected(card.slug)}
                         onLayoutAnimationComplete={() => setReturning(null)}
-                        aria-label={`Card ${i + 1} of ${hand.length}: turn it over`}
+                        aria-label={formatMessage(dictionary.cards.cardAria, {
+                          n: i + 1,
+                          total: hand.length,
+                        })}
                         className="card-3d group block aspect-[222/348] w-full cursor-pointer"
                       >
                         <motion.div

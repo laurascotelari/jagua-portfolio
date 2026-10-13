@@ -2,6 +2,7 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import { imageSize } from "image-size";
+import type { Locale } from "@/i18n/config";
 
 export type Artwork = {
   slug: string;
@@ -19,12 +20,14 @@ export type Artwork = {
   isCard: boolean;
 };
 
+export type LocalizedString = string | { pt?: string; en?: string };
+
 type CatalogEntry = {
   file: string;
-  title?: string;
+  title?: LocalizedString;
   year?: number | string;
-  description?: string;
-  meaning?: string;
+  description?: LocalizedString;
+  meaning?: LocalizedString;
   isCard?: boolean;
 };
 
@@ -36,6 +39,7 @@ export type LoadArtworksOptions = {
   catalogPath?: string;
   artDir?: string;
   urlBase?: string;
+  locale?: Locale;
 };
 
 function titleFromSlug(slug: string): string {
@@ -50,6 +54,19 @@ export function cleanText(value: unknown): string | undefined {
   if (!trimmed) return undefined;
   if (PLACEHOLDER_TEXT.has(trimmed.toLowerCase())) return undefined;
   return value;
+}
+
+/** Resolve a plain string or `{ pt, en }` field for the active locale (fallback: other locale). */
+export function pickLocalized(
+  value: LocalizedString | undefined,
+  locale: Locale,
+): string | undefined {
+  if (value == null) return undefined;
+  if (typeof value === "string") return cleanText(value);
+  const primary = cleanText(value[locale]);
+  if (primary) return primary;
+  const fallback = locale === "pt" ? value.en : value.pt;
+  return cleanText(fallback);
 }
 
 function parseYear(value: unknown): number | undefined {
@@ -90,6 +107,7 @@ function readCatalog(catalogPath: string): CatalogEntry[] {
 export function loadArtworks(options: LoadArtworksOptions = {}): Artwork[] {
   const catalogPath = resolveCatalogPath(options.catalogPath);
   const urlBase = options.urlBase ?? "/art";
+  const locale = options.locale ?? "en";
 
   return readCatalog(catalogPath).flatMap((entry): Artwork[] => {
     if (!entry?.file || typeof entry.file !== "string") return [];
@@ -107,13 +125,13 @@ export function loadArtworks(options: LoadArtworksOptions = {}): Artwork[] {
       {
         slug,
         src: `${urlBase}/${encodeURIComponent(entry.file)}`,
-        title: entry.title?.trim() || titleFromSlug(slug),
+        title: pickLocalized(entry.title, locale) || titleFromSlug(slug),
         width: rotated ? size.height : size.width,
         height: rotated ? size.width : size.height,
         date: DATE_PREFIX.exec(slug)?.[1],
         year: parseYear(entry.year),
-        description: cleanText(entry.description),
-        meaning: cleanText(entry.meaning),
+        description: pickLocalized(entry.description, locale),
+        meaning: pickLocalized(entry.meaning, locale),
         isCard: entry.isCard === true,
       },
     ];

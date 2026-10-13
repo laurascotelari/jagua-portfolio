@@ -1,6 +1,6 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { cleanText, loadArtworks } from "@/lib/art";
+import { cleanText, loadArtworks, pickLocalized } from "@/lib/art";
 
 const FIXTURES = path.join(__dirname, "fixtures", "art");
 const CATALOG = path.join(FIXTURES, "artworks.json");
@@ -14,11 +14,21 @@ describe("cleanText", () => {
   });
 });
 
+describe("pickLocalized", () => {
+  it("picks the active locale and falls back to the other", () => {
+    expect(pickLocalized({ pt: "Oi", en: "Hi" }, "pt")).toBe("Oi");
+    expect(pickLocalized({ pt: "Oi", en: "Hi" }, "en")).toBe("Hi");
+    expect(pickLocalized({ pt: "Só PT" }, "en")).toBe("Só PT");
+    expect(pickLocalized("Plain", "pt")).toBe("Plain");
+  });
+});
+
 describe("loadArtworks", () => {
   const artworks = loadArtworks({
     catalogPath: CATALOG,
     artDir: FIXTURES,
     urlBase: "/art",
+    locale: "en",
   });
 
   it("loads catalog entries that have an image on disk, in catalog order", () => {
@@ -49,6 +59,20 @@ describe("loadArtworks", () => {
       width: 10,
       height: 30,
       isCard: true,
+    });
+  });
+
+  it("resolves Portuguese localized fields", () => {
+    const [tall] = loadArtworks({
+      catalogPath: CATALOG,
+      artDir: FIXTURES,
+      urlBase: "/art",
+      locale: "pt",
+    });
+    expect(tall).toMatchObject({
+      title: "A Alta",
+      description: "Uma fixture.",
+      meaning: "Um dia de fixture.",
     });
   });
 

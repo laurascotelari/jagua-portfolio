@@ -1,25 +1,45 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-
-// Clickable spots on the desk drawing, as percentages of the image box so they scale with it.
-const hotspots = [
-  { href: "/#gallery", label: "Click to see the gallery", box: { left: 19, top: 3, width: 62, height: 34 }, centered: true },
-  { href: "/#about", label: "Click to read about me", box: { left: 62, top: 37.5, width: 14, height: 15 } },
-  { href: "/#cards", label: "Click to check today's card", box: { left: 62.5, top: 54.5, width: 11.5, height: 7.5 } },
-];
+import { localePath } from "@/i18n/locale-path";
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
 
 export function Hero() {
+  const locale = useLocale();
+  const dictionary = useDictionary();
+
+  // Clickable spots on the desk drawing, as percentages of the image box so they scale with it.
+  const hotspots = [
+    {
+      href: localePath(locale, "gallery"),
+      label: dictionary.hero.hotspotGallery,
+      box: { left: 19, top: 3, width: 62, height: 34 },
+      centered: true,
+    },
+    {
+      href: localePath(locale, "about"),
+      label: dictionary.hero.hotspotAbout,
+      box: { left: 62, top: 37.5, width: 14, height: 15 },
+    },
+    {
+      href: localePath(locale, "cards"),
+      label: dictionary.hero.hotspotCards,
+      box: { left: 62.5, top: 54.5, width: 11.5, height: 7.5 },
+    },
+  ];
+
   return (
     // Fills the first screen below the sticky header; the desk drawing spills down into the cards section.
     <section
       id="home"
-      aria-label="Home"
+      aria-label={dictionary.hero.ariaLabel}
       className="relative flex min-h-[calc(100svh-var(--header-h))] flex-col overflow-x-clip bg-pink"
     >
       {/* Keeps the wordmark at 42% of the viewport, as when the nav sat inside the hero. */}
       <div className="relative z-10 flex items-center px-8 py-16 md:absolute md:top-[calc(42svh-var(--header-h))] md:left-[clamp(32px,7.5vw,108px)] md:-translate-y-1/2 md:p-0">
         <h1 className="text-[clamp(56px,6.6vw,110px)] leading-none [word-spacing:-0.45em]">
-          <Link href="/#home">Jagua.jpg</Link>
+          <Link href={localePath(locale, "home")}>Jagua.jpg</Link>
         </h1>
       </div>
       {/* Desktop: drawing bleeds off the right edge, up over the sticky header, and 18vw into the cards section, which stays
@@ -30,7 +50,7 @@ export function Hero() {
         <div className="relative w-full max-w-[680px] md:max-w-none">
           <Image
             src="/illustrations/desk2.png"
-            alt="Line drawing of an artist's desk under a wall covered in framed pictures"
+            alt={dictionary.hero.deskAlt}
             width={2500}
             height={2692}
             priority
