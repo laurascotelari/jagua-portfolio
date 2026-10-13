@@ -7,6 +7,7 @@ import { loadArtworks } from "@/lib/art";
 
 export default function Home() {
   const artworks = loadArtworks();
+  const cardArtworks = artworks.filter((a) => a.card);
 
   return (
     <>
@@ -15,7 +16,7 @@ export default function Home() {
       </header>
       <main className="flex flex-1 flex-col">
         <Hero />
-        <CardsSection artworks={artworks} />
+        <CardsSection artworks={cardArtworks} />
         <GallerySection artworks={artworks} />
         <AboutSection />
       </main>
