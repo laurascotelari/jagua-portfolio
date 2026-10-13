@@ -4,10 +4,11 @@ import {
   isLocale,
   localeCookie,
   localeFromAcceptLanguage,
+  sectionRoutes,
   type Locale,
 } from "@/i18n/config";
 
-const SECTION_REDIRECTS = new Set(["gallery", "cards", "about"]);
+const SECTION_REDIRECTS = new Set<string>(sectionRoutes);
 
 function preferredLocale(request: NextRequest): Locale {
   const cookie = request.cookies.get(localeCookie)?.value;

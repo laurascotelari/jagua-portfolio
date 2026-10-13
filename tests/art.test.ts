@@ -87,6 +87,7 @@ describe("loadArtworks", () => {
       loadArtworks({
         catalogPath: path.join(FIXTURES, "nope.json"),
         artDir: FIXTURES,
+        locale: "en",
       }),
     ).toEqual([]);
   });
