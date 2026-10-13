@@ -1,27 +1,39 @@
 # jagua-portfolio
 
-# Main Idea 
+# Main Idea
 Art portfolio for an illustrator. Should allow the user to easily add new images to the protfolio. The website must have a section with multiple Art works in a simmilar design to pinterest. The landing page should have a big image (fills the whole page) and be a kind of 'Art of the Day', so there's a new image everyday (pseudo-random). The design should be creative and quirky.
 
 ## How to add art
 
 1. Put the image in `public/art/` (`.jpg`, `.png`, `.webp`, `.avif` or `.gif`).
-2. Commit and push. The site rebuilds and the image appears in the gallery and can be dealt as one of the day's 5 cards on **Check the Cards**.
+2. Add an entry to `content/artworks.json` (see below).
+3. Commit and push. The site rebuilds; the image appears in the gallery, and if `"isCard": true` it can be dealt as one of the day's 5 cards on **Check the Cards**.
 
-**Naming**
-- The title comes from the filename: `sleepy-fox.jpg` → "Sleepy fox".
-- Start the name with a date to sort newest first: `2026-10-05-sleepy-fox.jpg`. The date isn't part of the title.
-
-**Optional details:** add a JSON file with the same name next to the image, for example `sleepy-fox.json`:
+**Catalog** (`content/artworks.json`) is the source of truth. Gallery order follows the array order. Only listed files are shown — an image alone in `public/art/` will not appear until it has a catalog entry.
 
 ```json
 {
+  "file": "sleepy-fox.jpg",
   "title": "The Sleepy Fox",
   "year": 2026,
   "description": "Gouache on paper.\n\nA blank line starts a new paragraph.",
-  "meaning": "Shown under \"What does it mean for your day?\" when the card is turned over."
+  "meaning": "Shown under \"What does it mean for your day?\" when the card is turned over.",
+  "isCard": true
 }
 ```
+
+| Field | Required | Notes |
+|---|---|---|
+| `file` | yes | Filename inside `public/art/` |
+| `title` | no | Defaults from the filename (`sleepy-fox.jpg` → "Sleepy fox") |
+| `year` | no | Number or numeric string |
+| `description` | no | Artist story; shown when a card is revealed |
+| `meaning` | no | Daily reading; shown under "What does it mean for your day?" |
+| `isCard` | no | `true` to include in the daily deal; default `false` |
+
+Stub copy such as `"Example 1"` or `"Descrição"` is ignored (treated as empty). Prefer real text, or omit the field.
+
+**Naming tip:** start the filename with a date to record when it was added: `2026-10-05-sleepy-fox.jpg`. The date is not part of the title.
 
 Delete the `placeholder-*.jpg` files once real art is in. Also swap the placeholder drawings in `public/illustrations/` (`desk.svg` for the landing page, `card-back.svg` for the cards). Keep the same names, or update the paths in `src/app/page.tsx` and `src/components/TarotCards.tsx`.
 
@@ -39,7 +51,8 @@ Requires Node 20.9 or newer.
 | `npm run build` | Production build (also type-checks) |
 
 Code map:
-- `src/lib/art.ts`: reads `public/art/`
+- `content/artworks.json`: artwork metadata catalog
+- `src/lib/art.ts`: reads the catalog and `public/art/`
 - `src/lib/daily.ts`: picks the day's 5 cards
 - `src/components/`: UI and animations (Motion)
 - `src/app/globals.css`: design tokens (colours, fonts); full specs in `docs/DESIGN.md`

@@ -1,0 +1,20 @@
+[
+  {
+    "file": "2026-03-01-tall_thing.png",
+    "title": "The Tall One",
+    "year": "2026",
+    "description": "A fixture.",
+    "meaning": "A fixture day.",
+    "isCard": true
+  },
+  {
+    "file": "wide-thing.png",
+    "description": "Example 1",
+    "meaning": "Descrição",
+    "isCard": false
+  },
+  {
+    "file": "missing-image.png",
+    "title": "Ghost"
+  }
+]
