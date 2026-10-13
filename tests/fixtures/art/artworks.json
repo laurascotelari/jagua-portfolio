@@ -5,13 +5,13 @@
     "year": "2026",
     "description": "A fixture.",
     "meaning": "A fixture day.",
-    "card": true
+    "isCard": true
   },
   {
     "file": "wide-thing.png",
     "description": "Example 1",
     "meaning": "Descrição",
-    "card": false
+    "isCard": false
   },
   {
     "file": "missing-image.png",

@@ -7,7 +7,7 @@ Art portfolio for an illustrator. Should allow the user to easily add new images
 
 1. Put the image in `public/art/` (`.jpg`, `.png`, `.webp`, `.avif` or `.gif`).
 2. Add an entry to `content/artworks.json` (see below).
-3. Commit and push. The site rebuilds; the image appears in the gallery, and if `"card": true` it can be dealt as one of the day's 5 cards on **Check the Cards**.
+3. Commit and push. The site rebuilds; the image appears in the gallery, and if `"isCard": true` it can be dealt as one of the day's 5 cards on **Check the Cards**.
 
 **Catalog** (`content/artworks.json`) is the source of truth. Gallery order follows the array order. Only listed files are shown — an image alone in `public/art/` will not appear until it has a catalog entry.
 
@@ -18,7 +18,7 @@ Art portfolio for an illustrator. Should allow the user to easily add new images
   "year": 2026,
   "description": "Gouache on paper.\n\nA blank line starts a new paragraph.",
   "meaning": "Shown under \"What does it mean for your day?\" when the card is turned over.",
-  "card": true
+  "isCard": true
 }
 ```
 
@@ -29,7 +29,7 @@ Art portfolio for an illustrator. Should allow the user to easily add new images
 | `year` | no | Number or numeric string |
 | `description` | no | Artist story; shown when a card is revealed |
 | `meaning` | no | Daily reading; shown under "What does it mean for your day?" |
-| `card` | no | `true` to include in the daily deal; default `false` |
+| `isCard` | no | `true` to include in the daily deal; default `false` |
 
 Stub copy such as `"Example 1"` or `"Descrição"` is ignored (treated as empty). Prefer real text, or omit the field.
 

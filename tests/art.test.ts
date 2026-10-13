@@ -35,7 +35,7 @@ describe("loadArtworks", () => {
     expect(wide.title).toBe("Wide thing");
     expect(wide.src).toBe("/art/wide-thing.png");
     expect(wide.date).toBeUndefined();
-    expect(wide.card).toBe(false);
+    expect(wide.isCard).toBe(false);
   });
 
   it("uses catalog metadata, normalizes year, and reads the date prefix", () => {
@@ -48,7 +48,7 @@ describe("loadArtworks", () => {
       date: "2026-03-01",
       width: 10,
       height: 30,
-      card: true,
+      isCard: true,
     });
   });
 

@@ -7,7 +7,7 @@ import { loadArtworks } from "@/lib/art";
 
 export default function Home() {
   const artworks = loadArtworks();
-  const cardArtworks = artworks.filter((a) => a.card);
+  const cardArtworks = artworks.filter((a) => a.isCard);
 
   return (
     <>

@@ -16,7 +16,7 @@ export type Artwork = {
   /** "What does it mean for your day?" text shown when the card is revealed. */
   meaning?: string;
   /** When true, eligible for the daily card deal. */
-  card: boolean;
+  isCard: boolean;
 };
 
 type CatalogEntry = {
@@ -25,7 +25,7 @@ type CatalogEntry = {
   year?: number | string;
   description?: string;
   meaning?: string;
-  card?: boolean;
+  isCard?: boolean;
 };
 
 const IMAGE_EXT = /\.(jpe?g|png|webp|avif|gif)$/i;
@@ -114,7 +114,7 @@ export function loadArtworks(options: LoadArtworksOptions = {}): Artwork[] {
         year: parseYear(entry.year),
         description: cleanText(entry.description),
         meaning: cleanText(entry.meaning),
-        card: entry.card === true,
+        isCard: entry.isCard === true,
       },
     ];
   });
