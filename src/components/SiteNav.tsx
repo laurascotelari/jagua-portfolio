@@ -6,7 +6,7 @@ import { navSections } from "@/i18n/config";
 import { localePath } from "@/i18n/locale-path";
 import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
 
-export function SiteNav({ className = "" }: { className?: string }) {
+export function SiteNav() {
   const locale = useLocale();
   const dictionary = useDictionary();
   const [active, setActive] = useState<string | null>(null);
@@ -48,7 +48,7 @@ export function SiteNav({ className = "" }: { className?: string }) {
   }, []);
 
   return (
-    <nav aria-label={dictionary.nav.ariaLabel} className={`flex flex-wrap gap-x-[clamp(24px,5vw,75px)] gap-y-2 ${className}`}>
+    <nav aria-label={dictionary.nav.ariaLabel} className="flex flex-wrap gap-x-[clamp(24px,5vw,75px)] gap-y-2">
       {navSections.map((id) => (
         <Link
           key={id}

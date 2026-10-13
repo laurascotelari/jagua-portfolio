@@ -6,7 +6,7 @@ import { localeCookie, otherLocale } from "@/i18n/config";
 import { localePath } from "@/i18n/locale-path";
 import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
 
-export function LanguageSwitcher({ className = "" }: { className?: string }) {
+export function LanguageSwitcher() {
   const locale = useLocale();
   const dictionary = useDictionary();
   const router = useRouter();
@@ -21,7 +21,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
       href={href}
       hrefLang={next}
       aria-label={`${dictionary.nav.language}: ${label}`}
-      className={`nav-link text-[clamp(20px,2vw,28px)] leading-[1.2] tracking-[0.02em] ${className}`}
+      className="nav-link text-[clamp(20px,2vw,28px)] leading-[1.2] tracking-[0.02em]"
       onClick={(e) => {
         e.preventDefault();
         document.cookie = `${localeCookie}=${next};path=/;max-age=${60 * 60 * 24 * 365};samesite=lax`;
