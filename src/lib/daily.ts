@@ -1,6 +1,9 @@
 const DATE_KEY = /^(\d{4})-(\d{2})-(\d{2})$/;
 const MS_PER_DAY = 86_400_000;
 
+/** How many cards are dealt each day. */
+export const HAND_SIZE = 5;
+
 /** Local calendar date as `YYYY-MM-DD`. */
 export function toDateKey(date: Date): string {
   const y = date.getFullYear();
@@ -45,7 +48,7 @@ function shuffled(count: number, seed: number): number[] {
  * deals the same cards (for every visitor) and the set changes day to day.
  * Note: adding or removing artworks reshuffles the current (and future) deals.
  */
-export function pickCardsForDate(dateKey: string, count: number, n = 5): number[] {
+export function pickCardsForDate(dateKey: string, count: number, n = HAND_SIZE): number[] {
   if (!Number.isInteger(count) || count < 0) {
     throw new RangeError(`count must be a non-negative integer, got ${count}`);
   }

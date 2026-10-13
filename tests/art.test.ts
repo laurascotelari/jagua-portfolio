@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { cleanText, loadArtworks, pickLocalized } from "@/lib/art";
@@ -88,5 +89,19 @@ describe("loadArtworks", () => {
         locale: "en",
       }),
     ).toEqual([]);
+  });
+});
+
+describe("daily card copy", () => {
+  it("gives every card a meaning in both languages", () => {
+    const catalog = JSON.parse(
+      fs.readFileSync(path.join(process.cwd(), "content", "artworks.json"), "utf8"),
+    ) as { isCard?: boolean; meaning?: { pt?: string; en?: string } }[];
+    const cards = catalog.filter((entry) => entry.isCard);
+    expect(cards.length).toBeGreaterThan(0);
+    for (const card of cards) {
+      expect(card.meaning?.pt?.trim().length).toBeGreaterThan(20);
+      expect(card.meaning?.en?.trim().length).toBeGreaterThan(20);
+    }
   });
 });

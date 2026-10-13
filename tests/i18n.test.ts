@@ -7,7 +7,14 @@ import {
   sectionRoutes,
 } from "@/i18n/config";
 import { formatMessage, getDictionary } from "@/i18n/dictionaries";
-import { localePath } from "@/i18n/locale-path";
+import { cardSharePath, localePath } from "@/i18n/locale-path";
+
+function leafKeys(value: unknown, prefix = ""): string[] {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return prefix ? [prefix] : [];
+  return Object.entries(value).flatMap(([key, child]) =>
+    leafKeys(child, prefix ? `${prefix}.${key}` : key),
+  );
+}
 
 describe("localeFromAcceptLanguage", () => {
   it("picks Portuguese for pt* tags", () => {
@@ -26,9 +33,7 @@ describe("dictionaries", () => {
   it("exposes the same keys in pt and en", () => {
     const pt = getDictionary("pt");
     const en = getDictionary("en");
-    expect(Object.keys(pt)).toEqual(Object.keys(en));
-    expect(Object.keys(pt.nav)).toEqual(Object.keys(en.nav));
-    expect(Object.keys(pt.cards)).toEqual(Object.keys(en.cards));
+    expect(leafKeys(pt)).toEqual(leafKeys(en));
   });
 
   it("formats card aria labels", () => {
@@ -45,6 +50,9 @@ describe("locale helpers", () => {
     expect(otherLocale("pt")).toBe("en");
     expect(localePath("pt")).toBe("/pt");
     expect(localePath("en", "gallery")).toBe("/en/#gallery");
+    expect(cardSharePath("en", "2026-10-13", "desenho_corvo_800px")).toBe(
+      "/en?date=2026-10-13&card=desenho_corvo_800px#cards",
+    );
     expect(sectionRoutes).toEqual(["cards", "gallery", "about"]);
     expect(navSections[0]).toBe("home");
   });

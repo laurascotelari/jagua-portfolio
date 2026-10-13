@@ -1,33 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { formatMessage } from "@/i18n/dictionaries";
-import { useDictionary } from "@/i18n/LocaleProvider";
+import { cardSharePath } from "@/i18n/locale-path";
+import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
 import type { Artwork } from "@/lib/art";
-import { isDateKey, pickCardsForDate, toDateKey } from "@/lib/daily";
+import { HAND_SIZE, pickCardsForDate } from "@/lib/daily";
+import type { Draw } from "@/lib/grimoire";
+import { paragraphs } from "@/lib/paragraphs";
+import { showCardQuery, useCardQuery } from "@/lib/use-card-query";
+import { useGrimoire } from "@/lib/use-grimoire";
 
-const HAND_SIZE = 5;
 const EASE_FLIP = [0.4, 0, 0.2, 1] as const;
 const FLIP = { duration: 0.6, ease: EASE_FLIP };
 const FADE = { duration: 0.25 };
-
-/** Today's local date, or `?date=YYYY-MM-DD` for previewing other days. */
-function getDateKey(): string {
-  const override = new URLSearchParams(window.location.search).get("date");
-  return override && isDateKey(override) ? override : toDateKey(new Date());
-}
-
-// Re-check the date when the tab comes back, so a tab left open overnight deals a new hand.
-function subscribe(onChange: () => void) {
-  document.addEventListener("visibilitychange", onChange);
-  return () => document.removeEventListener("visibilitychange", onChange);
-}
-
-function paragraphs(text: string): string[] {
-  return text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-}
 
 function CardBack() {
   return (
@@ -51,23 +39,71 @@ function CardFront({ art }: { art: Artwork }) {
 }
 
 export function TarotCards({ artworks }: { artworks: Artwork[] }) {
+  const locale = useLocale();
   const dictionary = useDictionary();
-  // null on the server and during hydration; the real date is only known in the browser.
-  const dateKey = useSyncExternalStore(subscribe, getDateKey, () => null);
-  const [selected, setSelected] = useState<string | null>(null);
+  const query = useCardQuery();
+  const dateKey = query?.dateKey ?? null;
+  const queryCard = query?.card ?? null;
+  const { draws, record, saveNote } = useGrimoire();
+  const [picked, setPicked] = useState<string | null>(null);
+  const [ignoredCard, setIgnoredCard] = useState<string | null>(null);
   // The card that was just put back, so it flips face-down on its way home.
   const [returning, setReturning] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
   const backRef = useRef<HTMLButtonElement>(null);
 
   const hand = dateKey
     ? pickCardsForDate(dateKey, artworks.length, HAND_SIZE).map((i) => artworks[i])
     : [];
+  const handKey = hand.map((card) => card.slug).join("|");
+  const token = `${dateKey ?? ""}:${queryCard ?? ""}`;
+  const [seenToken, setSeenToken] = useState(token);
+  let activePicked = picked;
+  let activeIgnored = ignoredCard;
+  // A new share link should open its card, not keep the one the visitor just closed.
+  if (dateKey && token !== seenToken) {
+    activePicked = null;
+    activeIgnored = null;
+    setSeenToken(token);
+    setPicked(null);
+    setIgnoredCard(null);
+  }
+  const fromQuery =
+    queryCard && queryCard !== activeIgnored && handKey.split("|").includes(queryCard) ? queryCard : null;
+  const selected = activePicked ?? fromQuery;
   const art = hand.find((a) => a.slug === selected) ?? null;
+  const note =
+    art && dateKey ? (draws.find((draw) => draw.date === dateKey && draw.slug === art.slug)?.note ?? "") : "";
 
   const close = useCallback(() => {
     setReturning(selected);
-    setSelected(null);
-  }, [selected]);
+    setPicked(null);
+    setIgnoredCard(queryCard);
+    setCopied(false);
+  }, [selected, queryCard]);
+
+  function openDraw(draw: Draw) {
+    showCardQuery(draw.date, draw.slug);
+    setReturning(null);
+    document.getElementById("cards")?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    if (!dateKey || !selected || !handKey.split("|").includes(selected)) return;
+    record(dateKey, selected);
+  }, [dateKey, selected, handKey, record]);
+
+  async function copyShare() {
+    if (!art || !dateKey) return;
+    const path = cardSharePath(locale, dateKey, art.slug);
+    const url = new URL(path, window.location.origin).toString();
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   useEffect(() => {
     if (!art) return;
@@ -141,14 +177,38 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                   </div>
                 </>
               )}
-              <button
-                ref={backRef}
-                type="button"
-                onClick={close}
-                className="nav-link mt-16 cursor-pointer text-[22px]"
-              >
-                {dictionary.cards.back}
-              </button>
+              <label className="mt-12 block max-w-[32rem]">
+                <span className="font-script text-[22px] leading-[1.2]">{dictionary.cards.grimoireNote}</span>
+                <input
+                  type="text"
+                  value={note}
+                  maxLength={280}
+                  onChange={(e) => {
+                    if (!dateKey) return;
+                    saveNote(dateKey, art.slug, e.target.value);
+                  }}
+                  aria-label={dictionary.cards.grimoireNoteLabel}
+                  className="mt-2 w-full border-b-2 border-navy bg-transparent py-2 text-[18px] leading-[1.4] outline-none"
+                />
+              </label>
+              <div className="mt-16 flex flex-wrap gap-x-10 gap-y-4">
+                <button
+                  ref={backRef}
+                  type="button"
+                  onClick={close}
+                  className="nav-link cursor-pointer text-[22px]"
+                >
+                  {dictionary.cards.back}
+                </button>
+                <button
+                  type="button"
+                  onClick={copyShare}
+                  className="nav-link cursor-pointer text-[22px]"
+                  aria-label={dictionary.cards.shareLabel}
+                >
+                  {copied ? dictionary.cards.shared : dictionary.cards.share}
+                </button>
+              </div>
             </motion.div>
           </motion.section>
         ) : (
@@ -183,7 +243,10 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                         type="button"
                         layoutId={`card-${card.slug}`}
                         transition={FLIP}
-                        onClick={() => setSelected(card.slug)}
+                        onClick={() => {
+                          setPicked(card.slug);
+                          if (dateKey) record(dateKey, card.slug);
+                        }}
                         onLayoutAnimationComplete={() => setReturning(null)}
                         aria-label={formatMessage(dictionary.cards.cardAria, {
                           n: i + 1,
@@ -212,6 +275,34 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                     />
                   ))}
             </ul>
+            {draws.length > 0 && (
+              <aside className="mt-16 px-6 md:pl-[104px]">
+                <h2 className="text-[30px] leading-[1.3] tracking-[0.02em]">{dictionary.cards.grimoireTitle}</h2>
+                <ul className="mt-6 flex flex-col gap-4">
+                  {draws.map((draw) => {
+                    const piece = artworks.find((item) => item.slug === draw.slug);
+                    if (!piece) return null;
+                    return (
+                      <li key={`${draw.date}-${draw.slug}`}>
+                        <button
+                          type="button"
+                          onClick={() => openDraw(draw)}
+                          className="nav-link cursor-pointer text-left text-[22px]"
+                          aria-label={formatMessage(dictionary.cards.grimoireOpen, {
+                            title: piece.title,
+                            date: draw.date,
+                          })}
+                        >
+                          <span className="font-script text-[20px]">{draw.date}</span>
+                          <span className="ml-3">{piece.title}</span>
+                        </button>
+                        {draw.note && <p className="font-script mt-1 text-[20px] leading-[1.2]">{draw.note}</p>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </aside>
+            )}
           </motion.section>
         )}
       </AnimatePresence>
