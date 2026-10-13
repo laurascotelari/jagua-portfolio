@@ -44,18 +44,16 @@ describe("loadArtworks", () => {
     const wide = artworks.find((a) => a.slug === "wide-thing")!;
     expect(wide.title).toBe("Wide thing");
     expect(wide.src).toBe("/art/wide-thing.png");
-    expect(wide.date).toBeUndefined();
     expect(wide.isCard).toBe(false);
   });
 
-  it("uses catalog metadata, normalizes year, and reads the date prefix", () => {
+  it("uses catalog metadata and normalizes year", () => {
     const tall = artworks[0];
     expect(tall).toMatchObject({
       title: "The Tall One",
       year: 2026,
       description: "A fixture.",
       meaning: "A fixture day.",
-      date: "2026-03-01",
       width: 10,
       height: 30,
       isCard: true,

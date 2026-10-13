@@ -10,8 +10,6 @@ export type Artwork = {
   title: string;
   width: number;
   height: number;
-  /** From a `YYYY-MM-DD-` filename prefix, if present. */
-  date?: string;
   year?: number;
   description?: string;
   /** "What does it mean for your day?" text shown when the card is revealed. */
@@ -127,7 +125,6 @@ export function loadArtworks(options: LoadArtworksOptions): Artwork[] {
         title: pickLocalized(entry.title, locale) || titleFromSlug(slug),
         width: rotated ? size.height : size.width,
         height: rotated ? size.width : size.height,
-        date: DATE_PREFIX.exec(slug)?.[1],
         year: parseYear(entry.year),
         description: pickLocalized(entry.description, locale),
         meaning: pickLocalized(entry.meaning, locale),
