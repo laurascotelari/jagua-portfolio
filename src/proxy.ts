@@ -44,7 +44,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (first && !isLocale(first)) {
+  if (first) {
     return redirectTo(request, `/${defaultLocale}${pathname}`);
   }
 
