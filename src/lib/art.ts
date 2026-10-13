@@ -2,7 +2,7 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import { imageSize } from "image-size";
-import type { Locale } from "@/i18n/config";
+import { otherLocale, type Locale } from "@/i18n/config";
 
 export type Artwork = {
   slug: string;
@@ -10,8 +10,6 @@ export type Artwork = {
   title: string;
   width: number;
   height: number;
-  /** From a `YYYY-MM-DD-` filename prefix, if present. */
-  date?: string;
   year?: number;
   description?: string;
   /** "What does it mean for your day?" text shown when the card is revealed. */
@@ -20,7 +18,7 @@ export type Artwork = {
   isCard: boolean;
 };
 
-export type LocalizedString = string | { pt?: string; en?: string };
+type LocalizedString = string | Partial<Record<Locale, string>>;
 
 type CatalogEntry = {
   file: string;
@@ -35,11 +33,11 @@ const IMAGE_EXT = /\.(jpe?g|png|webp|avif|gif)$/i;
 const DATE_PREFIX = /^(\d{4}-\d{2}-\d{2})[-_ ]+/;
 const PLACEHOLDER_TEXT = new Set(["example 1", "descrição", "descricao"]);
 
-export type LoadArtworksOptions = {
+type LoadArtworksOptions = {
   catalogPath?: string;
   artDir?: string;
   urlBase?: string;
-  locale?: Locale;
+  locale: Locale;
 };
 
 function titleFromSlug(slug: string): string {
@@ -65,8 +63,7 @@ export function pickLocalized(
   if (typeof value === "string") return cleanText(value);
   const primary = cleanText(value[locale]);
   if (primary) return primary;
-  const fallback = locale === "pt" ? value.en : value.pt;
-  return cleanText(fallback);
+  return cleanText(value[otherLocale(locale)]);
 }
 
 function parseYear(value: unknown): number | undefined {
@@ -104,10 +101,10 @@ function readCatalog(catalogPath: string): CatalogEntry[] {
  * entry's `file` against `public/art` (or `artDir`). Catalog order is preserved.
  * Entries whose image file is missing are skipped.
  */
-export function loadArtworks(options: LoadArtworksOptions = {}): Artwork[] {
+export function loadArtworks(options: LoadArtworksOptions): Artwork[] {
   const catalogPath = resolveCatalogPath(options.catalogPath);
   const urlBase = options.urlBase ?? "/art";
-  const locale = options.locale ?? "en";
+  const { locale } = options;
 
   return readCatalog(catalogPath).flatMap((entry): Artwork[] => {
     if (!entry?.file || typeof entry.file !== "string") return [];
@@ -128,7 +125,6 @@ export function loadArtworks(options: LoadArtworksOptions = {}): Artwork[] {
         title: pickLocalized(entry.title, locale) || titleFromSlug(slug),
         width: rotated ? size.height : size.width,
         height: rotated ? size.width : size.height,
-        date: DATE_PREFIX.exec(slug)?.[1],
         year: parseYear(entry.year),
         description: pickLocalized(entry.description, locale),
         meaning: pickLocalized(entry.meaning, locale),

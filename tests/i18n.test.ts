@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   isLocale,
   localeFromAcceptLanguage,
+  navSections,
   otherLocale,
+  sectionRoutes,
 } from "@/i18n/config";
 import { formatMessage, getDictionary } from "@/i18n/dictionaries";
 import { localePath } from "@/i18n/locale-path";
@@ -43,5 +45,7 @@ describe("locale helpers", () => {
     expect(otherLocale("pt")).toBe("en");
     expect(localePath("pt")).toBe("/pt");
     expect(localePath("en", "gallery")).toBe("/en/#gallery");
+    expect(sectionRoutes).toEqual(["cards", "gallery", "about"]);
+    expect(navSections[0]).toBe("home");
   });
 });

@@ -9,7 +9,6 @@
 
   --shadow-card: 0 4px 3px var(--color-navy-shadow);
   --shadow-card-hover: 0 10px 12px var(--color-navy-shadow);
-  --ease-flip: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* next/font sets --font-dotgothic / --font-nothing-you-could-do on <html>. */

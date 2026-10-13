@@ -2,26 +2,18 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { navSections } from "@/i18n/config";
 import { localePath } from "@/i18n/locale-path";
 import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
 
-const sectionIds = ["home", "cards", "gallery", "about"] as const;
-
-export function SiteNav({ className = "" }: { className?: string }) {
+export function SiteNav() {
   const locale = useLocale();
   const dictionary = useDictionary();
   const [active, setActive] = useState<string | null>(null);
 
-  const links = [
-    { id: "home", label: dictionary.nav.home },
-    { id: "cards", label: dictionary.nav.cards },
-    { id: "gallery", label: dictionary.nav.gallery },
-    { id: "about", label: dictionary.nav.about },
-  ] as const;
-
   // Highlight whichever section crosses the middle of the viewport.
   useEffect(() => {
-    const sections = sectionIds
+    const sections = navSections
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
     // Don't touch the URL until the page has scrolled, so a deep link like /#gallery isn't wiped before it's applied.
@@ -56,15 +48,15 @@ export function SiteNav({ className = "" }: { className?: string }) {
   }, []);
 
   return (
-    <nav aria-label={dictionary.nav.ariaLabel} className={`flex flex-wrap gap-x-[clamp(24px,5vw,75px)] gap-y-2 ${className}`}>
-      {links.map((link) => (
+    <nav aria-label={dictionary.nav.ariaLabel} className="flex flex-wrap gap-x-[clamp(24px,5vw,75px)] gap-y-2">
+      {navSections.map((id) => (
         <Link
-          key={link.id}
-          href={localePath(locale, link.id)}
-          aria-current={active === link.id ? "location" : undefined}
+          key={id}
+          href={localePath(locale, id)}
+          aria-current={active === id ? "location" : undefined}
           className="nav-link text-[clamp(20px,2vw,28px)] leading-[1.2] tracking-[0.02em]"
         >
-          {link.label}
+          {dictionary.nav[id]}
         </Link>
       ))}
     </nav>

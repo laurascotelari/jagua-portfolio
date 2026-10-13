@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { DotGothic16, Nothing_You_Could_Do } from "next/font/google";
 import { MotionProvider } from "@/components/MotionProvider";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -58,7 +57,7 @@ export default async function LocaleLayout({
       <body className="min-h-full flex flex-col font-pixel">
         <MotionProvider>
           <LocaleProvider locale={locale} dictionary={dictionary}>
-            <Suspense fallback={null}>{children}</Suspense>
+            {children}
           </LocaleProvider>
         </MotionProvider>
       </body>
