@@ -28,7 +28,8 @@ export type Dictionary = {
     pickTitle: string;
     pickSubtitle: string;
     meaningHeading: string;
-    back: string;
+    discoverMore: string;
+    meaningToday: string;
     cardAria: string;
   };
   gallery: {
@@ -74,7 +75,8 @@ const pt: Dictionary = {
     pickTitle: "O que as cartas dizem sobre o seu dia?",
     pickSubtitle: "escolha uma e descubra!",
     meaningHeading: "O que isso significa para o seu dia?",
-    back: "← voltar às cartas",
+    discoverMore: "Descubra mais sobre esta obra",
+    meaningToday: "O que esta carta significa para hoje?",
     cardAria: "Carta {n} de {total}: vire-a",
   },
   gallery: {
@@ -120,7 +122,8 @@ const en: Dictionary = {
     pickTitle: "What does the cards say about your day?",
     pickSubtitle: "pick one and find out!",
     meaningHeading: "What does it mean for your day?",
-    back: "← back to the cards",
+    discoverMore: "Discover more about this artwork",
+    meaningToday: "What does this card mean for today?",
     cardAria: "Card {n} of {total}: turn it over",
   },
   gallery: {
