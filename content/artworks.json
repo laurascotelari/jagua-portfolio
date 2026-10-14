@@ -117,21 +117,35 @@
       "pt": "As Meninas",
       "en": "The Girls"
     },
-    "year": 2022
+    "description": {
+      "pt": "Quando criança eu costumava brincar muito com uma prima minha. Temos quase a mesma idade, apenas 3 semanas de diferença, e eu costumava esperar ansiosamente pelas férias, para que enfim pudessemos retomar nossas aventuras. Ela sempre foi destemida e criativa nas brincadeiras e eu lembro de ir na onda, achando tudo sempre muito divertido. Entre uma brincadeira e outra, acabávamos em alguma enrascada e a aventura terminava com cacos no chão, com uma bronca ou com alguma reclamação de um vizinho que tinha esquecido que já fora criança um dia. Esse desenho surgiu justamente dessas lembranças e da ideia de que, se as férias durassem para sempre, talvez nos encontrássemos em uma situação como essa retratada, em uma abdução alienígena ou encontro fantástico com o paranormal. Enfim, qualquer que fosse a situação, sei que estaríamos de mãos dadas e prontas para enfrentar o desconhecido.",
+      "en": "The Girls is a drawing that portrays three girls on a beach, with the sun just starting to rise. The drawing is a tribute to the girls, who are the protagonists of many stories, from childhood to adulthood."
+    },
+    "year": 2022,
+    "isCard": true
   },
   {
     "file": "desenho_fuinha_robo_800px.png",
     "title": {
-      "pt": "Fuinha Robô (Dama com Arminho)",
-      "en": "Robot Stoat (Lady with an Ermine)"
+      "pt": "Fuinha Robô",
+      "en": "Robot Stoat"
     },
-    "year": 2020
+    "description": {
+      "pt": "Arte inspirada pela pintura 'Dama com Arminho' do Leonardo Da Vinci. Comecei com a ideia de fazer apenas um estudo da pintura, mas me empolguei e quis me divertir um pouco, subvertendo a ideia original e empregando elementos fanstáticos e futurísticos (como uma fuinha robô e o óculos/headset steampunk).",
+      "en": "Robot Stoat is a drawing that portrays a robot with a lady with an ermine. The drawing is a tribute to the robot stoat, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2020,
+    "isCard": true
   },
   {
     "file": "desenho_medusa_800px.png",
     "title": {
       "pt": "Medusa",
       "en": "Medusa"
+    },
+    "description": {
+      "pt": "Uma das representações mais conhecidas da Medusa é a pintura feita por Caravaggio, que retrata de maneira monstruosa a cabeça decepada sobre um 'escudo' escuro. Eu, que cresci vendo filmes e histórias que retratavam a Medusa como mais um monstro sem razão de ser, usado apenas para rechear uma história ou assustar o telespectador, fiquei inconformada com a real origem desse mito: Medusa era uma mulher devota da deusa Atena e foi transformada em 'monstro' como forma de punição por ter violado o espaço sagrado de seu templo. Porém, o que muitas vezes é omitido nas releituras desse mito, é que Medusa foi violada por Poseidon dentro do templo, e portanto foi punida por algo que não teve escolha. Nesse contexto, fiz esse desenho para retratar essa personagem de uma maneira mais digna.",
+      "en": "Medusa is a drawing that portrays a medusa with a lady with an ermine. The drawing is a tribute to the medusa, who is the protagonist of many stories, from childhood to adulthood."
     },
     "year": 2023
   },
@@ -149,7 +163,8 @@
       "pt": "Mulher com Lenço",
       "en": "Woman with a Scarf"
     },
-    "year": 2026
+    "year": 2026,
+    "isCard": true
   },
   {
     "file": "desenho_onda_800px.png",
@@ -157,21 +172,34 @@
       "pt": "Mãe-mar",
       "en": "Mother-Sea"
     },
+    "description": {
+      "pt": "Essa arte personifica a energia e força que é inerente aos corpos d'água, como uma padroeira dessas criaturas que habitam as águas e são alimentadas por elas.",
+      "en": "Mother-Sea is a drawing that portrays a mother-sea with a beach, with the sun just starting to rise. The drawing is a tribute to the mother-sea, who is the protagonist of many stories, from childhood to adulthood."
+    },
     "year": 2021
   },
   {
     "file": "desenho_organizer_800px.png",
     "title": {
-      "pt": "Maestra",
+      "pt": "Maestra (Mãe-natureza)",
       "en": "Maestra"
     },
-    "year": 2021
+    "description": {
+      "pt": "Essa arte em questão imagina as intrincadas conexões da natureza como se fossem regidas por um maestro, que coordena a vida terrestre como quem coordena uma enorme orquestra, guiando os ventos, as águas e orqustrando as grandes colmeias de ableha.",
+      "en": "Maestra is a drawing that portrays a maestra with a beach, with the sun just starting to rise. The drawing is a tribute to the maestra, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2021,
+    "isCard": true
   },
   {
     "file": "desenho_orquidea_rosto_800px.png",
     "title": {
       "pt": "Vênus",
       "en": "Venus"
+    },
+    "description": {
+      "pt": "Sempre tive uma fascinação pelas orquídeas, acredito que elas carregam uma beleza peculiar que é, ao mesmo tempo, delicada e ameaçadora. Quando demoro o olhar sobre elas, me pego pensando que há algo de estranho no seus formatos e nas suas cores, como se não pertencessem a esse planeta. Durante esses devaneios, imaginei como uma máscara em formato de orquídea poderia transformar um rosto normal em uma figura monstruosa, que contrasta com a ideia de uma flor inofensiva e frágil.",
+      "en": "Venus is a drawing that portrays a venus with a beach, with the sun just starting to rise. The drawing is a tribute to the venus, who is the protagonist of many stories, from childhood to adulthood."
     },
     "year": 2024
   },
@@ -181,7 +209,12 @@
       "pt": "Ovelha Negra",
       "en": "Black Sheep"
     },
-    "year": 2023
+    "description": {
+      "pt": "O Acústico MTV da Rita Lee foi um dos primeiros álbums que lembro de ter escutado de cabo à rabo, inúmeras vezes. Minha mãe tinha o CD e lembro de escutarmos sábado de manhã enquanto eu desenhava, durante faxinas, fazendo bolo e, mais tarde, em um pen-drive no rádio do carro à caminho da escola. É engraçado pensar como os gostos de nossos pais moldam os nossos primeiros gostos musicais. Esse primeiro gosto cru, que vem emprestado da nossa família, vai se misturando e sendo moldado pelas nossas vivências (ou pelas nossas próprias mãos), até se tornar irreconhecível. Porém, tem certas músicas que sobrevivem a essa mudança e nos acompanham pelas fases e, a cada momento que tocam, vão ganhando nova vida.",
+      "en": "Black Sheep is a drawing that portrays a black sheep with a beach, with the sun just starting to rise. The drawing is a tribute to the black sheep, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2023,
+    "isCard": true
   },
   {
     "file": "desenho_passaro_800px.png",
@@ -189,7 +222,12 @@
       "pt": "Amigo Imaginário (O vôo)",
       "en": "Imaginary Friend (The Flight)"
     },
-    "year": 2018
+    "description": {
+      "pt": "A minha escrivaninha do meu quarto sempre foi lotada de cacarecos, bibelôs e pequenas esculturas. Eu costumava colecioná-los como pequenos amuletos e eles vinham até mim das mais diversas formas, como presentes, em lojas de antiguidades, feiras de rua ou mesmo caídos no chão, em alguma valeta qualquer. Devido a maneira misteriosa que esses objetos chegavam até mim, pensar na história deles era um dos meus passatempos favoritos: quem será que esculpiu isso? Qual o seu real significado? Teria sido um presente para alguém especial que já partiu? Ou teria sido uma lembrança de um amor que trazia mais dor do que saudade? De qualquer forma, essas relíquias me acompanhavam durante as sessões de desenho e quase sempre apareciam de alguma forma na arte final. Nesse desenho em específico, imaginei que o pequeno pássaro de madeira que eu mantinha perto da luminária poderia ter sido o brinquedo estimado de alguma criança e que poderia ter tido também uma vida própria aos olhos dela.",
+      "en": "Imaginary Friend is a drawing that portrays an imaginary friend with a beach, with the sun just starting to rise. The drawing is a tribute to the imaginary friend, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2018,
+    "isCard": true
   },
   {
     "file": "desenho_pote_800px.png",
@@ -197,7 +235,12 @@
       "pt": "O Pote",
       "en": "The Pot"
     },
-    "year": 2024
+    "description": {
+      "pt": "O Pote é um desenho que retrata um pote com uma praia, com o sol ainda no horizonte. O desenho é uma homenagem à O Pote, que é um personagem de uma história que eu gosto muito. Ela é um pote que foi criada para ser um companheiro de um humano e que, por algum motivo, foi abandonada e agora vive sozinha em uma caverna.",
+      "en": "The Pot is a drawing that portrays a pot with a beach, with the sun just starting to rise. The drawing is a tribute to the pot, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2024,
+    "isCard": true
   },
   {
     "file": "desenho_quarto_800px.png",
@@ -205,7 +248,12 @@
       "pt": "O Quarto",
       "en": "The Bedroom"
     },
-    "year": 2017
+    "description": {
+      "pt": "O Quarto é um desenho que retrata um quarto com uma praia, com o sol ainda no horizonte. O desenho é uma homenagem à O Quarto, que é um personagem de uma história que eu gosto muito. Ela é um quarto que foi criada para ser um companheiro de um humano e que, por algum motivo, foi abandonada e agora vive sozinha em uma caverna.",
+      "en": "The Bedroom is a drawing that portrays a bedroom with a beach, with the sun just starting to rise. The drawing is a tribute to the bedroom, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2017,
+    "isCard": true
   },
   {
     "file": "desenho_quarto_oceano_800px.png",
@@ -213,7 +261,12 @@
       "pt": "Sonhos Lúcidos",
       "en": "Lucid Dreams"
     },
-    "year": 2017
+    "description": {
+      "pt": "Sonhos Lúcidos é um desenho que retrata sonhos lúcidos com uma praia, com o sol ainda no horizonte. O desenho é uma homenagem à Sonhos Lúcidos, que é um personagem de uma história que eu gosto muito. Ela é um sonhos lúcidos que foi criada para ser um companheiro de um humano e que, por algum motivo, foi abandonada e agora vive sozinha em uma caverna.",
+      "en": "Lucid Dreams is a drawing that portrays lucid dreams with a beach, with the sun just starting to rise. The drawing is a tribute to the lucid dreams, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2017,
+    "isCard": true
   },
   {
     "file": "desenho_sacada_800px.png",
@@ -225,7 +278,8 @@
     "description": {
       "pt": "Desenho inspirado pela varandinha de um café que fui durante uma passagem por São Paulo. Lembro de estar lá em cima conversando com o meu tio e de olhar a movimentação da feira que estava acontecendo logo ali embaixo. Eu estava contente por estar expondo os meus desenhos e estar participando de um evento com artistas que admiro tanto. Além disso, a luz meio dourada de fim de tarde e o cheiro de café e pão na chapa deixavam aquele momento ainda mais especial. Foi então que me dei conta de que estava genuinamente feliz. São estranhas essas horas de perceber a própria felicidade, me faz ter a impressão de que estou vivendo em uma lembrança, algo que não é bem real. Talvez isso aconteça porque sei que esse momento logo será transformado em uma memória feliz e eu vou me pegar revivendo ele inúmeras vezes. O momento atual é só a primeira delas. De qualquer forma, esses pensamentos me fizeram perceber que eu ainda sou capaz de criar memórias felizes (o que é um alívio) e esse desenho serve para eternizar isso.",
       "en": "A drawing inspired by the little balcony of a café I visited while passing through São Paulo. I remember being up there talking with my uncle and watching the bustle of the fair happening right below. I was glad to be showing my drawings and taking part in an event with artists I admire so much. On top of that, the somewhat golden late-afternoon light and the smell of coffee and bread on the griddle made the moment even more special. That was when I realized I was genuinely happy. Those hours of noticing your own happiness are strange — they make me feel as if I am living inside a memory, something not quite real. Maybe that happens because I know this moment will soon become a happy memory, and I will catch myself reliving it countless times. The present is only the first of them. Either way, those thoughts made me see that I am still able to create happy memories (what a relief), and this drawing serves to make that last."
-    }
+    },
+    "isCard": true
   },
   {
     "file": "desenho_sao_paulo_800px.png",
@@ -265,7 +319,12 @@
       "pt": "Tropicália",
       "en": "Tropicália"
     },
-    "year": 2018
+    "description": {
+      "pt": "Tropicália é um desenho que retrata uma tropicália com uma praia, com o sol ainda no horizonte. O desenho é uma homenagem à Tropicália, que é um personagem de uma história que eu gosto muito. Ela é uma tropicália que foi criada para ser um companheiro de um humano e que, por algum motivo, foi abandonada e agora vive sozinha em uma caverna.",
+      "en": "Tropicália is a drawing that portrays a tropicalia with a beach, with the sun just starting to rise. The drawing is a tribute to the tropicalia, who is the protagonist of many stories, from childhood to adulthood."
+    },
+    "year": 2018,
+    "isCard": true
   },
   {
     "file": "quadro_asa_inseto.png",
