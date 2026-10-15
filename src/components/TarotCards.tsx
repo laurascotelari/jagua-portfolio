@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { formatMessage } from "@/i18n/dictionaries";
 import { useDictionary } from "@/i18n/LocaleProvider";
@@ -55,29 +55,15 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
   // null on the server and during hydration; the real date is only known in the browser.
   const dateKey = useSyncExternalStore(subscribe, getDateKey, () => null);
   const [selected, setSelected] = useState<string | null>(null);
-  // The card that was just put back, so it flips face-down on its way home.
-  const [returning, setReturning] = useState<string | null>(null);
-  const backRef = useRef<HTMLButtonElement>(null);
+  const [showArtwork, setShowArtwork] = useState(false);
 
   const hand = dateKey
     ? pickCardsForDate(dateKey, artworks.length, HAND_SIZE).map((i) => artworks[i])
     : [];
   const art = hand.find((a) => a.slug === selected) ?? null;
-
-  const close = useCallback(() => {
-    setReturning(selected);
-    setSelected(null);
-  }, [selected]);
-
-  useEffect(() => {
-    if (!art) return;
-    backRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [art, close]);
+  const canToggle = Boolean(art?.meaning && art.description);
+  const showDescription = Boolean(art?.description && (showArtwork || !art.meaning));
+  const body = showDescription ? art?.description : art?.meaning;
 
   if (artworks.length === 0) {
     return (
@@ -122,33 +108,22 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
             >
               <h1 className="text-[40px] leading-[1.2] tracking-[0.04em]">{art.title}</h1>
               {art.year && <p className="font-script mt-3 text-[20px] leading-[1.2]">{art.year}</p>}
-              {art.description && (
-                <div className="mt-[60px] space-y-[35px] text-[clamp(18px,1.6vw,22px)] leading-[1.6] tracking-[0.01em]">
-                  {paragraphs(art.description).map((p, i) => (
+              {body && (
+                <div className="mt-5 space-y-[35px] text-[clamp(18px,1.6vw,22px)] leading-[1.6] tracking-[0.01em]">
+                  {paragraphs(body).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
               )}
-              {art.meaning && (
-                <>
-                  <h2 className="mt-20 text-[30px] leading-[1.3] tracking-[0.02em]">
-                    {dictionary.cards.meaningHeading}
-                  </h2>
-                  <div className="mt-5 space-y-[35px] text-[clamp(18px,1.6vw,22px)] leading-[1.6] tracking-[0.01em]">
-                    {paragraphs(art.meaning).map((p, i) => (
-                      <p key={i}>{p}</p>
-                    ))}
-                  </div>
-                </>
+              {canToggle && (
+                <button
+                  type="button"
+                  onClick={() => setShowArtwork((open) => !open)}
+                  className="nav-link mt-16 cursor-pointer text-[22px]"
+                >
+                  {showArtwork ? dictionary.cards.meaningToday : dictionary.cards.discoverMore}
+                </button>
               )}
-              <button
-                ref={backRef}
-                type="button"
-                onClick={close}
-                className="nav-link mt-16 cursor-pointer text-[22px]"
-              >
-                {dictionary.cards.back}
-              </button>
             </motion.div>
           </motion.section>
         ) : (
@@ -174,7 +149,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                     <motion.li
                       key={card.slug}
                       className="w-[clamp(120px,40vw,222px)] md:w-auto md:flex-1 md:max-w-[222px]"
-                      initial={returning ? false : { opacity: 0, y: 24 }}
+                      initial={{ opacity: 0, y: 24 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, transition: FADE }}
                       transition={{ duration: 0.4, delay: i * 0.06 }}
@@ -183,8 +158,10 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                         type="button"
                         layoutId={`card-${card.slug}`}
                         transition={FLIP}
-                        onClick={() => setSelected(card.slug)}
-                        onLayoutAnimationComplete={() => setReturning(null)}
+                        onClick={() => {
+                          setShowArtwork(false);
+                          setSelected(card.slug);
+                        }}
                         aria-label={formatMessage(dictionary.cards.cardAria, {
                           n: i + 1,
                           total: hand.length,
@@ -193,7 +170,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                       >
                         <motion.div
                           className="card-flipper transition-transform duration-200 group-hover:-translate-y-2 [&>.card-face]:transition-shadow [&>.card-face]:duration-200 group-hover:[&>.card-face]:shadow-card-hover"
-                          initial={returning === card.slug ? { rotateY: 180 } : false}
+                          initial={false}
                           animate={{ rotateY: 0 }}
                           transition={FLIP}
                         >
