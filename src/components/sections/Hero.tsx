@@ -36,11 +36,24 @@ export function Hero() {
       aria-label={dictionary.hero.ariaLabel}
       className="relative flex min-h-[calc(100svh-var(--header-h))] flex-col overflow-x-clip bg-pink"
     >
-      {/* Keeps the wordmark at 42% of the viewport, as when the nav sat inside the hero. */}
-      <div className="relative z-10 flex items-center px-8 py-16 md:absolute md:top-[calc(42svh-var(--header-h))] md:left-[clamp(32px,7.5vw,108px)] md:-translate-y-1/2 md:p-0">
-        <h1 className="text-[clamp(56px,6.6vw,110px)] leading-none [word-spacing:-0.45em]">
-          <Link href={localePath(locale, "home")}>Jagua.jpg</Link>
+      <div className="relative z-10 items-center px-8 py-16 md:absolute md:top-[calc(42svh-var(--header-h))] md:left-[clamp(32px,7.5vw,108px)] md:-translate-y-1/2 md:p-0">
+        <h1 className="w-[min(100%,800px)] md:w-[min(35vw,800px)]">
+          <Link href={localePath(locale, "home")} className="block">
+            <Image
+              src="/illustrations/jagua_logo_1500px.png"
+              alt="Jagua"
+              width={1500}
+              height={1022}
+              priority
+              sizes="(min-width: 768px) 30vw, 420px"
+              className="h-auto w-full"
+            />
+          </Link>
         </h1>
+        <div className="-mt-8 flex flex-col justify-center items-center">
+          <span className="text-[100px] leading-none tracking-[0.02em]">Jagua.jpg</span>
+          <span className="mt-2 text-[24px] leading-none tracking-[0.05em]">Portfolio and silly art projects</span>
+        </div>
       </div>
       {/* Desktop: drawing bleeds off the right edge, up over the sticky header, and 18vw into the cards section, which stays
           just above the card row. Width is capped so its height (aspect 2692/2500) fits from the top of the viewport to that

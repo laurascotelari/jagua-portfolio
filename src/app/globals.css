@@ -11,10 +11,10 @@
   --shadow-card-hover: 0 10px 12px var(--color-navy-shadow);
 }
 
-/* next/font sets --font-dotgothic / --font-nothing-you-could-do on <html>. */
+/* next/font sets --font-dotgothic / --font-homemade-apple on <html>. */
 @theme inline {
   --font-pixel: var(--font-dotgothic), "VT323", "Courier New", monospace;
-  --font-script: var(--font-nothing-you-could-do), "Homemade Apple", "Caveat", cursive;
+  --font-script: var(--font-homemade-apple), "Homemade Apple", cursive;
 }
 
 /* Reserve the scrollbar's space so the Lightbox scroll lock doesn't widen the
