@@ -19,6 +19,8 @@ export type Dictionary = {
     hotspotGallery: string;
     hotspotAbout: string;
     hotspotCards: string;
+    hotspotLightsOff: string;
+    hotspotLightsOn: string;
   };
   cards: {
     ariaLabel: string;
@@ -66,6 +68,8 @@ const pt: Dictionary = {
     hotspotGallery: "Clique para ver a galeria",
     hotspotAbout: "Clique para ler sobre mim",
     hotspotCards: "Clique para ver a carta do dia",
+    hotspotLightsOff: "Clique para apagar a luz",
+    hotspotLightsOn: "Clique para acender a luz",
   },
   cards: {
     ariaLabel: "Consultar as cartas",
@@ -113,6 +117,8 @@ const en: Dictionary = {
     hotspotGallery: "Click to see the gallery",
     hotspotAbout: "Click to read about me",
     hotspotCards: "Click to check today's card",
+    hotspotLightsOff: "Click to turn the light off",
+    hotspotLightsOn: "Click to turn the light on",
   },
   cards: {
     ariaLabel: "Check the Cards",
