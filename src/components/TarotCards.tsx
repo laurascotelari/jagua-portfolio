@@ -7,6 +7,7 @@ import { formatMessage } from "@/i18n/dictionaries";
 import { useDictionary } from "@/i18n/LocaleProvider";
 import type { Artwork } from "@/lib/art";
 import { isDateKey, pickCardsForDate, toDateKey } from "@/lib/daily";
+import { cardBackSrc } from "@/lib/theme";
 
 const HAND_SIZE = 5;
 const EASE_FLIP = [0.4, 0, 0.2, 1] as const;
@@ -29,13 +30,17 @@ function paragraphs(text: string): string[] {
   return text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 }
 
-function CardBack() {
+function CardBack({ index }: { index: number }) {
   return (
-    <div className="card-face p-2">
-      <div className="relative h-full w-full overflow-hidden bg-cream">
-        {/* Swap for the real card-back print (navy on cream). */}
-        <Image src="/illustrations/card-back.svg" alt="" fill className="object-fill" />
-      </div>
+    <div className="card-face overflow-hidden">
+      <Image src={cardBackSrc(index)} alt="" fill sizes="(min-width: 768px) 222px, 40vw" className="theme-light object-cover" />
+      <Image
+        src={cardBackSrc(index, true)}
+        alt=""
+        fill
+        sizes="(min-width: 768px) 222px, 40vw"
+        className="theme-dark object-cover"
+      />
     </div>
   );
 }
@@ -60,7 +65,8 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
   const hand = dateKey
     ? pickCardsForDate(dateKey, artworks.length, HAND_SIZE).map((i) => artworks[i])
     : [];
-  const art = hand.find((a) => a.slug === selected) ?? null;
+  const selectedIndex = hand.findIndex((a) => a.slug === selected);
+  const art = selectedIndex >= 0 ? hand[selectedIndex] : null;
   const canToggle = Boolean(art?.meaning && art.description);
   const showDescription = Boolean(art?.description && (showArtwork || !art.meaning));
   const body = showDescription ? art?.description : art?.meaning;
@@ -94,7 +100,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                 animate={{ rotateY: 180 }}
                 transition={FLIP}
               >
-                <CardBack />
+                <CardBack index={selectedIndex} />
                 <CardFront art={art} />
               </motion.div>
             </motion.div>
@@ -174,7 +180,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
                           animate={{ rotateY: 0 }}
                           transition={FLIP}
                         >
-                          <CardBack />
+                          <CardBack index={i} />
                           <CardFront art={card} />
                         </motion.div>
                       </motion.button>

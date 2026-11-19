@@ -11,6 +11,14 @@
   --shadow-card-hover: 0 10px 12px var(--color-navy-shadow);
 }
 
+/* Dark palette from the night artwork: the illustrations' background is the same navy as the ink token. */
+[data-theme="dark"] {
+  --color-pink: #160066;
+  --color-cream: #030c22;
+  --color-navy: #d000e0;
+  --color-navy-shadow: rgb(0 0 0 / 0.45);
+}
+
 /* next/font sets --font-dotgothic / --font-homemade-apple on <html>. */
 @theme inline {
   --font-pixel: var(--font-dotgothic), "VT323", "Courier New", monospace;
@@ -111,5 +119,18 @@ body {
 
   .card-face-front {
     transform: rotateY(180deg);
+  }
+
+  /* Light and dark illustration pairs. The attribute is set before paint. */
+  .theme-dark {
+    display: none;
+  }
+
+  [data-theme="dark"] .theme-light {
+    display: none;
+  }
+
+  [data-theme="dark"] .theme-dark {
+    display: block;
   }
 }

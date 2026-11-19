@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { toggleTheme, useDarkMode } from "@/components/ThemeProvider";
 import { localePath } from "@/i18n/locale-path";
 import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
+import { DESK_SRC, darkVariant } from "@/lib/theme";
 
 export function Hero() {
   const locale = useLocale();
   const dictionary = useDictionary();
+  const dark = useDarkMode();
 
   // Clickable spots on the desk drawing, as percentages of the image box so they scale with it.
   const hotspots = [
@@ -28,6 +31,9 @@ export function Hero() {
       box: { left: 62.5, top: 54.5, width: 11.5, height: 7.5 },
     },
   ];
+
+  const lightLabel = dark ? dictionary.hero.hotspotLightsOn : dictionary.hero.hotspotLightsOff;
+  const lightSwitch = { left: 14.9, top: 38.9, width: 5.8, height: 9.8 };
 
   return (
     // Fills the first screen below the sticky header; the desk drawing spills down into the cards section.
@@ -62,14 +68,44 @@ export function Hero() {
       <div className="relative flex flex-1 items-end justify-center md:pointer-events-none md:absolute md:-bottom-[18vw] md:left-[40vw] md:z-40 md:w-[min(70vw,calc((100svh+18vw)*2500/2692))]">
         <div className="relative w-full max-w-[680px] md:max-w-none">
           <Image
-            src="/illustrations/desk2.png"
+            src={DESK_SRC}
             alt={dictionary.hero.deskAlt}
             width={2500}
             height={2692}
             priority
             sizes="(min-width: 768px) 70vw, 100vw"
-            className="h-auto w-full mix-blend-darken"
+            className="theme-light h-auto w-full mix-blend-darken"
           />
+          <Image
+            src={darkVariant(DESK_SRC)}
+            alt={dictionary.hero.deskAlt}
+            width={2500}
+            height={2692}
+            priority
+            sizes="(min-width: 768px) 70vw, 100vw"
+            unoptimized
+            className="theme-dark h-auto w-full"
+          />
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-pressed={dark}
+            aria-label={lightLabel}
+            className="group pointer-events-auto absolute cursor-pointer rounded-lg"
+            style={{
+              left: `${lightSwitch.left}%`,
+              top: `${lightSwitch.top}%`,
+              width: `${lightSwitch.width}%`,
+              height: `${lightSwitch.height}%`,
+            }}
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 rounded-md bg-cream px-3 py-1.5 text-sm whitespace-nowrap opacity-0 shadow-card transition duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+            >
+              {lightLabel}
+            </span>
+          </button>
           {hotspots.map(({ href, label, box, centered }) => (
             <Link
               key={href}

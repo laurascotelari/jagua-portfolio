@@ -28,6 +28,7 @@ describe("dictionaries", () => {
     const en = getDictionary("en");
     expect(Object.keys(pt)).toEqual(Object.keys(en));
     expect(Object.keys(pt.nav)).toEqual(Object.keys(en.nav));
+    expect(Object.keys(pt.hero)).toEqual(Object.keys(en.hero));
     expect(Object.keys(pt.cards)).toEqual(Object.keys(en.cards));
   });
 
