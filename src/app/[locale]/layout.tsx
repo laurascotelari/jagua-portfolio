@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DotGothic16, Nothing_You_Could_Do } from "next/font/google";
 import { MotionProvider } from "@/components/MotionProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, locales, type Locale } from "@/i18n/config";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
@@ -53,13 +54,21 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${pixel.variable} ${script.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-pixel">
-        <MotionProvider>
-          <LocaleProvider locale={locale} dictionary={dictionary}>
-            {children}
-          </LocaleProvider>
-        </MotionProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(localStorage.getItem("jagua-theme")==="dark")document.documentElement.dataset.theme="dark";}catch(e){}})();`,
+          }}
+        />
+        <ThemeProvider>
+          <MotionProvider>
+            <LocaleProvider locale={locale} dictionary={dictionary}>
+              {children}
+            </LocaleProvider>
+          </MotionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
