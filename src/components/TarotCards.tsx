@@ -87,7 +87,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
           <motion.section
             key="reveal"
             aria-label={art.title}
-            className="grid gap-12 px-6 pb-20 pt-[60px] md:grid-cols-[minmax(0,522px)_1fr] md:pl-[89px] md:pr-[70px]"
+            className="grid gap-8 px-6 pb-20 pt-[60px] md:grid-cols-[minmax(0,522px)_1fr] md:gap-12 md:pl-[89px] md:pr-[70px]"
           >
             <motion.div
               layoutId={`card-${art.slug}`}
@@ -106,7 +106,7 @@ export function TarotCards({ artworks }: { artworks: Artwork[] }) {
             </motion.div>
 
             <motion.div
-              className="max-w-[710px] mt-60 md:pt-3"
+              className="max-w-[710px] md:mt-60 md:pt-3"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, transition: FADE }}

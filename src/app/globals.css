@@ -19,10 +19,10 @@
   --color-navy-shadow: rgb(0 0 0 / 0.45);
 }
 
-/* next/font sets --font-dotgothic / --font-nothing-you-could-do on <html>. */
+/* next/font sets --font-dotgothic / --font-homemade-apple on <html>. */
 @theme inline {
   --font-pixel: var(--font-dotgothic), "VT323", "Courier New", monospace;
-  --font-script: var(--font-nothing-you-could-do), "Homemade Apple", "Caveat", cursive;
+  --font-script: var(--font-homemade-apple), "Homemade Apple", cursive;
 }
 
 /* Reserve the scrollbar's space so the Lightbox scroll lock doesn't widen the

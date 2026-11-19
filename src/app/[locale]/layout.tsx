@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DotGothic16, Nothing_You_Could_Do } from "next/font/google";
+import { DotGothic16, Homemade_Apple } from "next/font/google";
 import { MotionProvider } from "@/components/MotionProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -14,8 +14,8 @@ const pixel = DotGothic16({
   subsets: ["latin"],
 });
 
-const script = Nothing_You_Could_Do({
-  variable: "--font-nothing-you-could-do",
+const script = Homemade_Apple({
+  variable: "--font-homemade-apple",
   weight: "400",
   subsets: ["latin"],
 });

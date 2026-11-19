@@ -42,6 +42,9 @@ export type Dictionary = {
   about: {
     title: string;
     comingSoon: string;
+    notebookAlt: string;
+    bio: string[];
+    signature: string;
   };
   lightbox: {
     close: string;
@@ -91,6 +94,14 @@ const pt: Dictionary = {
   about: {
     title: "Sobre mim",
     comingSoon: "em breve!",
+    notebookAlt:
+      "Caderno aberto com fotos, adesivos e um chaveiro, com um texto manuscrito sobre a artista na página da direita",
+    bio: [
+      "Sou artista e cientista da computação pela USP. Nasci em Rio Preto (SP) e hoje moro na capital.",
+      "Comecei a estudar pintura acadêmica aos 13 anos e, desde então, participei de feiras, exposições coletivas e muitos projetos.",
+      "No futuro, espero poder fazer uma exposição solo e publicar minha primeira HQ!",
+    ],
+    signature: "— L. Ferré",
   },
   lightbox: {
     close: "fechar ✕",
@@ -140,6 +151,14 @@ const en: Dictionary = {
   about: {
     title: "About me",
     comingSoon: "coming soon!",
+    notebookAlt:
+      "Open notebook with photos, stickers and a keychain, with a handwritten note about the artist on the right page",
+    bio: [
+      "I'm an artist and a computer scientist from USP. I was born in Rio Preto (SP) and now live in São Paulo.",
+      "I started studying academic painting at 13 and, since then, I've taken part in fairs, group exhibitions and lots of projects.",
+      "In the future, I hope to hold a solo exhibition and publish my first comic book!",
+    ],
+    signature: "— L. Ferré",
   },
   lightbox: {
     close: "close ✕",
