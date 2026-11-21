@@ -20,9 +20,9 @@ describe("card backs", () => {
   });
 
   it("uses the dark file for the same seat", () => {
-    expect(cardBackSrc(0, false)).toBe("/illustrations/back-caveira-m.png");
-    expect(cardBackSrc(0, true)).toBe("/illustrations/back-caveira-m-dark.png");
-    expect(cardBackSrc(1, true)).toBe("/illustrations/back-cat-m-dark.png");
-    expect(cardBackSrc(4, true)).toBe("/illustrations/back-pote-m-dark.png");
+    expect(cardBackSrc(0, false)).toBe("/illustrations/back-caveira-m2.png");
+    expect(cardBackSrc(0, true)).toBe("/illustrations/back-caveira-m2-dark.png");
+    expect(cardBackSrc(1, true)).toBe("/illustrations/back-cat-m2-dark.png");
+    expect(cardBackSrc(4, true)).toBe("/illustrations/back-pote-m2-dark.png");
   });
 });

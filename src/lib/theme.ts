@@ -1,10 +1,10 @@
 /** Card backs are fixed by seat: 1 skull, 2 cat, 3 butterfly, 4 heart, 5 potion. */
 export const CARD_BACKS = [
-  "/illustrations/back-caveira-m.png",
-  "/illustrations/back-cat-m.png",
-  "/illustrations/back-borboleta-m.png",
-  "/illustrations/back-coracao-m.png",
-  "/illustrations/back-pote-m.png",
+  "/illustrations/back-caveira-m2.png",
+  "/illustrations/back-cat-m2.png",
+  "/illustrations/back-borboleta-m2.png",
+  "/illustrations/back-coracao-m2.png",
+  "/illustrations/back-pote-m2.png",
 ] as const;
 
 export const TITLE_SRC = "/illustrations/title.png";
