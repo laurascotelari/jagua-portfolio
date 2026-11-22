@@ -1,16 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { toggleTheme, useDarkMode } from "@/components/ThemeProvider";
 import { localePath } from "@/i18n/locale-path";
 import { useDictionary, useLocale } from "@/i18n/LocaleProvider";
-import { DESK_SRC, darkVariant } from "@/lib/theme";
+import { DESK_SRC, darkVariant, lightsOffVariant } from "@/lib/theme";
 
 export function Hero() {
   const locale = useLocale();
   const dictionary = useDictionary();
   const dark = useDarkMode();
+  const [lightsOff, setLightsOff] = useState(false);
 
   // Clickable spots on the desk drawing, as percentages of the image box so they scale with it.
   const hotspots = [
@@ -23,7 +25,7 @@ export function Hero() {
     {
       href: localePath(locale, "about"),
       label: dictionary.hero.hotspotAbout,
-      box: { left: 62, top: 37.5, width: 14, height: 15 },
+      box: { left: 44, top: 55, width: 17.5, height: 7 },
     },
     {
       href: localePath(locale, "cards"),
@@ -32,8 +34,11 @@ export function Hero() {
     },
   ];
 
+  const deskSrc = lightsOff ? lightsOffVariant(DESK_SRC) : DESK_SRC;
   const lightLabel = dark ? dictionary.hero.hotspotLightsOn : dictionary.hero.hotspotLightsOff;
+  const lampLabel = lightsOff ? dictionary.hero.hotspotLightsOn : dictionary.hero.hotspotLightsOff;
   const lightSwitch = { left: 14.9, top: 38.9, width: 5.8, height: 9.8 };
+  const lamp = { left: 62, top: 37.5, width: 14, height: 15 };
 
   return (
     // Fills the first screen below the sticky header; the desk drawing spills down into the cards section.
@@ -43,8 +48,11 @@ export function Hero() {
       className="relative flex min-h-[calc(100svh-var(--header-h))] flex-col overflow-x-clip bg-pink"
     >
       <div className="relative z-10 items-center px-8 py-16 md:absolute md:top-[calc(50svh-var(--header-h))] md:left-[clamp(32px,7.5vw,108px)] md:-translate-y-1/2 md:p-0">
-        <div className="-mt-8 flex flex-col justify-center items-center">
-          <span className="text-[100px] leading-none tracking-[0.02em]">Jagua.jpg</span>
+        <div className="-mt-8 flex w-full flex-col items-center justify-center max-md:@container md:w-auto">
+          {/* 21cqi fills the padded column: "Jagua.jpg" in DotGothic16 is ~4.68em wide. */}
+          <span className="text-[100px] leading-none tracking-[0.02em] whitespace-nowrap max-md:text-[min(100px,21cqi)]">
+            Jagua.jpg
+          </span>
           <span className="mt-2 text-[24px] leading-none tracking-[0.05em]">Portfolio and silly art projects</span>
         </div>
       </div>
@@ -55,7 +63,7 @@ export function Hero() {
       <div className="relative flex flex-1 items-end justify-center md:pointer-events-none md:absolute md:-bottom-[18vw] md:left-[40vw] md:z-40 md:w-[min(70vw,calc((100svh+18vw)*2500/2692))]">
         <div className="relative w-full max-w-[680px] md:max-w-none">
           <Image
-            src={DESK_SRC}
+            src={deskSrc}
             alt={dictionary.hero.deskAlt}
             width={2500}
             height={2692}
@@ -64,7 +72,7 @@ export function Hero() {
             className="theme-light h-auto w-full mix-blend-darken"
           />
           <Image
-            src={darkVariant(DESK_SRC)}
+            src={darkVariant(deskSrc)}
             alt={dictionary.hero.deskAlt}
             width={2500}
             height={2692}
@@ -73,6 +81,26 @@ export function Hero() {
             unoptimized
             className="theme-dark h-auto w-full"
           />
+          <button
+            type="button"
+            onClick={() => setLightsOff((off) => !off)}
+            aria-pressed={lightsOff}
+            aria-label={lampLabel}
+            className="group pointer-events-auto absolute cursor-pointer rounded-lg"
+            style={{
+              left: `${lamp.left}%`,
+              top: `${lamp.top}%`,
+              width: `${lamp.width}%`,
+              height: `${lamp.height}%`,
+            }}
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 rounded-md bg-cream px-3 py-1.5 text-sm whitespace-nowrap opacity-0 shadow-card transition duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+            >
+              {lampLabel}
+            </span>
+          </button>
           <button
             type="button"
             onClick={toggleTheme}

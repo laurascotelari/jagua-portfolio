@@ -1,10 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { CARD_BACKS, DESK_SRC, TITLE_SRC, cardBackSrc, darkVariant } from "@/lib/theme";
+import { CARD_BACKS, DESK_SRC, TITLE_SRC, cardBackSrc, darkVariant, lightsOffVariant } from "@/lib/theme";
 
 describe("darkVariant", () => {
   it("inserts -dark before the extension", () => {
     expect(darkVariant(TITLE_SRC)).toBe("/illustrations/title-dark.png");
     expect(darkVariant(DESK_SRC)).toBe("/illustrations/desenho_escrivaninha_digital_v8-dark.png");
+  });
+});
+
+describe("lightsOffVariant", () => {
+  it("inserts -lights-off before the extension", () => {
+    expect(lightsOffVariant(DESK_SRC)).toBe("/illustrations/desenho_escrivaninha_digital_v8-lights-off.png");
+    expect(darkVariant(lightsOffVariant(DESK_SRC))).toBe(
+      "/illustrations/desenho_escrivaninha_digital_v8-lights-off-dark.png",
+    );
   });
 });
 

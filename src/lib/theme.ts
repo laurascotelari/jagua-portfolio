@@ -15,6 +15,11 @@ export function darkVariant(src: string): string {
   return src.replace(/(\.[a-z0-9]+)$/i, "-dark$1");
 }
 
+/** Pair `file.png` with `file-lights-off.png`. */
+export function lightsOffVariant(src: string): string {
+  return src.replace(/(\.[a-z0-9]+)$/i, "-lights-off$1");
+}
+
 export function cardBackSrc(index: number, dark = false): string {
   const base = CARD_BACKS[index] ?? CARD_BACKS[0];
   return dark ? darkVariant(base) : base;
