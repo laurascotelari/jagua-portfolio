@@ -54,7 +54,7 @@ export type Dictionary = {
 
 const pt: Dictionary = {
   meta: {
-    title: "Jagua jpg · Ilustração",
+    title: "Jagua.jpg",
     description: "Portfólio de ilustração, com cinco novas cartas para escolher todos os dias.",
   },
   nav: {
@@ -111,7 +111,7 @@ const pt: Dictionary = {
 
 const en: Dictionary = {
   meta: {
-    title: "Jagua jpg · Illustration",
+    title: "Jagua.jpg",
     description: "Illustration portfolio, with five new cards to pick from every day.",
   },
   nav: {
