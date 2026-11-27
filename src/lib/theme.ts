@@ -8,7 +8,7 @@ export const CARD_BACKS = [
 ] as const;
 
 export const TITLE_SRC = "/illustrations/title.png";
-export const DESK_SRC = "/illustrations/desenho_escrivaninha_digital_v8.png";
+export const DESK_SRC = "/illustrations/desenho_escrivaninha_digital_v9.png";
 
 /** Pair `file.png` with `file-dark.png`. */
 export function darkVariant(src: string): string {
